@@ -8,7 +8,7 @@ import com.example.bu2zh.model.TokenResponse;
 import com.example.bu2zh.rongdemo.utils.Constants;
 import com.example.bu2zh.rongdemo.utils.SHA1Tool;
 import com.example.network.ApiService;
-import com.example.network.RongService;
+import com.example.network.RongApi;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,6 +20,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 
 public class MainActivity extends AppCompatActivity {
@@ -43,14 +44,14 @@ public class MainActivity extends AppCompatActivity {
         final String timeStamp = Long.toString(System.currentTimeMillis());
         final String signature = SHA1Tool.SHA1(Constants.APP_SECRET + nonce + timeStamp);
 
-        RongService service = ApiService.getInstance().create(RongService.class);
+        RongApi api = ApiService.getInstance().create(RongApi.class);
         Map<String, String> headers = new HashMap<>();
         headers.put("App-Key", Constants.APP_KEY);
         headers.put("Nonce", nonce);
         headers.put("Timestamp", timeStamp);
         headers.put("Signature", signature);
 
-        service.getToken(headers, "5", "test5", "ha")
+        api.getToken(headers, "5", "test5", "ha")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -58,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void accept(TokenResponse tokenResponse) throws Exception {
                                 Log.d(TAG, "token: " + tokenResponse.token());
+                                connect(tokenResponse.token());
                             }
                         },
                         new Consumer<Throwable>() {
@@ -67,24 +69,24 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
                 );
+    }
 
-        String token = "+VH3GeUAoKNH0bdkp5eSety/0uRxRwM05z0kWb35eTEvcy9OXHQYPoCxL1OzjM75JmwN5CnhcM0S5QnFgU99Nw==";
-        String token2 = "MXustJwYwa5fwIWIvqOU6pAQhuZbGq8TRJMXwUzMbbiTPxC1cSuHyjWkTAIqo9gqG8Zf3AKu8lRkJcTGSalEzQ==";
-//        RongIM.connect(token2, new RongIMClient.ConnectCallback() {
-//            @Override
-//            public void onTokenIncorrect() {
-//                Log.d(TAG, "ConnectCallback connect onTokenIncorrect");
-//            }
-//
-//            @Override
-//            public void onSuccess(String s) {
-//                Log.d(TAG, "ConnectCallback connect onSuccess " + s);
-//            }
-//
-//            @Override
-//            public void onError(RongIMClient.ErrorCode errorCode) {
-//                Log.d(TAG, "ConnectCallback connect onError-ErrorCode=" + errorCode);
-//            }
-//        });
+    private void connect(String token) {
+        RongIM.connect(token, new RongIMClient.ConnectCallback() {
+            @Override
+            public void onTokenIncorrect() {
+                Log.d(TAG, "ConnectCallback connect onTokenIncorrect");
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                Log.d(TAG, "ConnectCallback connect onSuccess " + s);
+            }
+
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+                Log.d(TAG, "ConnectCallback connect onError-ErrorCode=" + errorCode);
+            }
+        });
     }
 }
