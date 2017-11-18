@@ -1,4 +1,4 @@
-package cn.rongcloud.demo_imlib_basic_android.utils;
+package com.example.bu2zh.rongdemo.utils;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
@@ -8,7 +8,7 @@ import java.security.NoSuchAlgorithmException;
  *  SHA1 哈希计算方法
  */
 
-class SHA1Tool {
+public class SHA1Tool {
     private static String convertToHex(byte[] data) {
         StringBuilder buf = new StringBuilder();
         for (byte b : data) {
@@ -22,7 +22,7 @@ class SHA1Tool {
         return buf.toString();
     }
 
-    static String SHA1(String text) {
+    public static String SHA1(String text) {
         MessageDigest md;
         try {
             md = MessageDigest.getInstance("SHA-1");

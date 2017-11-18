@@ -5,7 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 
 @AutoValue
-public abstract class TestResponse {
+public abstract class TokenResponse {
 
     public abstract int code();
 
@@ -13,7 +13,7 @@ public abstract class TestResponse {
 
     public abstract String token();
 
-    public static TypeAdapter<TestResponse> typeAdapter(Gson gson) {
-        return new AutoValue_TestResponse.GsonTypeAdapter(gson);
+    static TypeAdapter<TokenResponse> typeAdapter(Gson gson) {
+        return new AutoValue_TokenResponse.GsonTypeAdapter(gson);
     }
 }
