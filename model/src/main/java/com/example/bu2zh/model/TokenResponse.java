@@ -1,32 +1,19 @@
 package com.example.bu2zh.model;
 
-public class TokenResponse {
+import com.google.auto.value.AutoValue;
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
 
-    private int code;
-    private String userId;
-    private String token;
+@AutoValue
+public abstract class TestResponse {
 
-    public int getCode() {
-        return code;
-    }
+    public abstract int code();
 
-    public void setCode(int code) {
-        this.code = code;
-    }
+    public abstract String userId();
 
-    public String getUserId() {
-        return userId;
-    }
+    public abstract String token();
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
+    public static TypeAdapter<TestResponse> typeAdapter(Gson gson) {
+        return new AutoValue_TestResponse.GsonTypeAdapter(gson);
     }
 }
