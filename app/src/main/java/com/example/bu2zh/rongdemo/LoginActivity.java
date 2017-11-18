@@ -3,11 +3,11 @@ package com.example.bu2zh.rongdemo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.bu2zh.model.TokenResponse;
+import com.example.bu2zh.rongdemo.sp.ConfigSp;
 import com.example.bu2zh.rongdemo.utils.Constants;
 import com.example.bu2zh.rongdemo.utils.SHA1Tool;
 import com.example.network.ApiService;
@@ -23,13 +23,8 @@ import butterknife.OnClick;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
-import io.rong.imkit.RongIM;
-import io.rong.imlib.RongIMClient;
-import io.rong.imlib.model.Conversation;
 
-public class MainActivity extends AppCompatActivity {
-
-    private static String TAG = "MainActivity";
+public class LoginActivity extends AppCompatActivity {
 
     @BindView(R.id.et_user_id)
     EditText mEtUserId;
@@ -72,8 +67,9 @@ public class MainActivity extends AppCompatActivity {
                         new Consumer<TokenResponse>() {
                             @Override
                             public void accept(TokenResponse tokenResponse) throws Exception {
-                                Log.d(TAG, "token: " + tokenResponse.token());
-                                connect(tokenResponse.token());
+                                new ConfigSp(LoginActivity.this).saveToken(tokenResponse.token());
+                                new BusinessLogic(LoginActivity.this).connect(tokenResponse.token());
+                                finish();
                             }
                         },
                         new Consumer<Throwable>() {
@@ -83,31 +79,5 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
                 );
-    }
-
-    private void connect(String token) {
-        RongIM.connect(token, new RongIMClient.ConnectCallback() {
-            @Override
-            public void onTokenIncorrect() {
-                Log.d(TAG, "ConnectCallback connect onTokenIncorrect");
-            }
-
-            @Override
-            public void onSuccess(String s) {
-                Log.d(TAG, "ConnectCallback connect onSuccess " + s);
-                startConversationList();
-            }
-
-            @Override
-            public void onError(RongIMClient.ErrorCode errorCode) {
-                Log.d(TAG, "ConnectCallback connect onError-ErrorCode=" + errorCode);
-            }
-        });
-    }
-
-    private void startConversationList() {
-        Map<String, Boolean> supportedConversation = new HashMap<>();
-        supportedConversation.put(Conversation.ConversationType.PRIVATE.getName(), false);
-        RongIM.getInstance().startConversationList(this, supportedConversation);
     }
 }
