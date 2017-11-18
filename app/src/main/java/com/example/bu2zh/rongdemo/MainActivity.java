@@ -2,7 +2,10 @@ package com.example.bu2zh.rongdemo;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.bu2zh.model.TokenResponse;
 import com.example.bu2zh.rongdemo.utils.Constants;
@@ -14,6 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -27,11 +31,19 @@ public class MainActivity extends AppCompatActivity {
 
     private static String TAG = "MainActivity";
 
-    @OnClick(R.id.btn1)
-    void onClick() {
-        Map<String, Boolean> supportedConversation = new HashMap<>();
-        supportedConversation.put(Conversation.ConversationType.PRIVATE.getName(), false);
-        RongIM.getInstance().startConversationList(this, supportedConversation);
+    @BindView(R.id.et_user_id)
+    EditText mEtUserId;
+
+    @OnClick(R.id.btn_login)
+    void onLoginClick() {
+        if (TextUtils.isEmpty(mEtUserId.getText().toString())) {
+            Toast.makeText(this, "请填写用户id", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        String userId = mEtUserId.getText().toString();
+        String userName = "test" + userId;
+        String portrait = "https://developer.rongcloud.cn/static/imgs/logo_1.png";
+        getToken(userId, userName, portrait);
     }
 
     @Override
@@ -39,7 +51,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+    }
 
+    private void getToken(String userId, String userName, String portrait) {
         final String nonce = Integer.toString(new Random().nextInt(1000));
         final String timeStamp = Long.toString(System.currentTimeMillis());
         final String signature = SHA1Tool.SHA1(Constants.APP_SECRET + nonce + timeStamp);
@@ -51,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         headers.put("Timestamp", timeStamp);
         headers.put("Signature", signature);
 
-        api.getToken(headers, "5", "test5", "ha")
+        api.getToken(headers, userId, userName, portrait)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -81,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuccess(String s) {
                 Log.d(TAG, "ConnectCallback connect onSuccess " + s);
+                startConversationList();
             }
 
             @Override
@@ -88,5 +103,11 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "ConnectCallback connect onError-ErrorCode=" + errorCode);
             }
         });
+    }
+
+    private void startConversationList() {
+        Map<String, Boolean> supportedConversation = new HashMap<>();
+        supportedConversation.put(Conversation.ConversationType.PRIVATE.getName(), false);
+        RongIM.getInstance().startConversationList(this, supportedConversation);
     }
 }

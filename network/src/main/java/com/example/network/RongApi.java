@@ -21,7 +21,7 @@ public interface RongApi {
     Single<TokenResponse> getToken(
             @HeaderMap Map<String, String> headers,
             @Field("userId") String userId,
-            @Field("name") String name,
+            @Field("name") String userName,
             @Field("portraitUri") String portraitUri
     );
 
