@@ -14,7 +14,7 @@ import retrofit2.http.POST;
  * Created by yanlongluo on 17/11/2017.
  */
 
-public interface RongService {
+public interface RongApi {
 
     @POST("user/getToken.json")
     @FormUrlEncoded
