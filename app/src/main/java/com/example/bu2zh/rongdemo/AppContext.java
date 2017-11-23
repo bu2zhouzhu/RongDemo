@@ -1,13 +1,16 @@
 package com.example.bu2zh.rongdemo;
 
 import android.content.Context;
+import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.example.bu2zh.rongdemo.rong.message.CustomizeMessage;
 
+import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Message;
+import io.rong.imlib.model.UserInfo;
 import io.rong.message.FileMessage;
 import io.rong.message.ImageMessage;
 import io.rong.message.TextMessage;
@@ -20,7 +23,18 @@ public class AppContext {
     private static AppContext appContext = new AppContext();
     private Context mContext;
 
+    private RongIM.UserInfoProvider mUserInfoProvider = new RongIM.UserInfoProvider() {
+        @Override
+        public UserInfo getUserInfo(String s) {
+            Uri uri = Uri.parse("http://rongcloud-web.qiniudn.com/docs_demo_rongcloud_logo.png");
+            UserInfo userinfo = new UserInfo(s, "test", uri);
+            RongIM.getInstance().refreshUserInfoCache(userinfo);
+            return userinfo;
+        }
+    };
+
     private AppContext() {
+        initListener();
     }
 
     static AppContext getInstance() {
@@ -41,6 +55,10 @@ public class AppContext {
 
     void registerReceiveMessageListener() {
 //        RongIMClient.setOnReceiveMessageListener(onReceiveMessageListener);
+    }
+
+    private void initListener() {
+        RongIM.setUserInfoProvider(mUserInfoProvider, true);
     }
 
     /**
