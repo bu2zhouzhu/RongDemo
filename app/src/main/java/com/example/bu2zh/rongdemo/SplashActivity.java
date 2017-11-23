@@ -5,8 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.widget.Toast;
 
+import com.example.bu2zh.rongdemo.activity.MainActivity;
 import com.example.bu2zh.rongdemo.sp.ConfigSp;
+
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 
 public class SplashActivity extends Activity {
 
@@ -17,7 +22,31 @@ public class SplashActivity extends Activity {
         if (TextUtils.isEmpty(token)) {
             startActivity(new Intent(this, LoginActivity.class));
         } else {
-            new BusinessLogic(this).connect(token);
+            connect(token);
         }
+    }
+
+    private void connect(String token) {
+        RongIM.connect(token, new RongIMClient.ConnectCallback() {
+            @Override
+            public void onTokenIncorrect() {
+
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                toMainActivity();
+                finish();
+            }
+
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+                Toast.makeText(SplashActivity.this, "连接失败", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void toMainActivity() {
+        startActivity(new Intent(this, MainActivity.class));
     }
 }

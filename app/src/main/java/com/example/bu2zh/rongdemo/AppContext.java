@@ -5,16 +5,10 @@ import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.bu2zh.rongdemo.rong.message.CustomizeMessage;
-
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.UserInfo;
-import io.rong.message.FileMessage;
-import io.rong.message.ImageMessage;
-import io.rong.message.TextMessage;
-import io.rong.message.VoiceMessage;
 
 public class AppContext {
     private static final String TAG = "AppContext";
@@ -53,11 +47,8 @@ public class AppContext {
         mContext = context.getApplicationContext();
     }
 
-    void registerReceiveMessageListener() {
-//        RongIMClient.setOnReceiveMessageListener(onReceiveMessageListener);
-    }
-
     private void initListener() {
+        RongIM.setOnReceiveMessageListener(onReceiveMessageListener);
         RongIM.setUserInfoProvider(mUserInfoProvider, true);
     }
 
@@ -67,20 +58,7 @@ public class AppContext {
     private RongIMClient.OnReceiveMessageListener onReceiveMessageListener = new RongIMClient.OnReceiveMessageListener() {
         @Override
         public boolean onReceived(Message message, int i) {
-            if (message.getContent() instanceof TextMessage) {
-                Log.d(TAG, "收到文本消息: " + ((TextMessage) message.getContent()).getContent());
-                Log.d(TAG, "文本消息的附加信息: " + ((TextMessage) message.getContent()).getExtra() + '\n');
-            } else if (message.getContent() instanceof ImageMessage) {
-                Log.d(TAG, "收到图片消息, Uri --> " + ((ImageMessage) message.getContent()).getThumUri() + '\n');
-            } else if (message.getContent() instanceof VoiceMessage) {
-                Log.d(TAG, "收到语音消息,Uri --> " + ((VoiceMessage)message.getContent()).getUri());
-                Log.d(TAG, "语音消息时长: " + ((VoiceMessage)message.getContent()).getDuration() + '\n');
-            } else if (message.getContent() instanceof FileMessage) {
-                Log.d(TAG, "服务端 Uri --> " + ((FileMessage)message.getContent()).getFileUrl() + '\n');
-            } else if (message.getContent() instanceof CustomizeMessage) {
-                Log.d(TAG, "自定义消息的内容: " + ((CustomizeMessage) message.getContent()).getContent() + '\n');
-            }
-            setMessageId(message.getMessageId());
+            Log.d(TAG, "收到消息");
             return false;
         }
     };

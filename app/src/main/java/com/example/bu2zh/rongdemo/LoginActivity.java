@@ -1,5 +1,6 @@
 package com.example.bu2zh.rongdemo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -7,6 +8,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.bu2zh.model.TokenResponse;
+import com.example.bu2zh.rongdemo.activity.MainActivity;
 import com.example.bu2zh.rongdemo.sp.ConfigSp;
 import com.example.bu2zh.rongdemo.utils.Constants;
 import com.example.bu2zh.rongdemo.utils.SHA1Tool;
@@ -23,6 +25,8 @@ import butterknife.OnClick;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -44,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
     }
 
@@ -68,8 +72,7 @@ public class LoginActivity extends AppCompatActivity {
                             @Override
                             public void accept(TokenResponse tokenResponse) throws Exception {
                                 new ConfigSp(LoginActivity.this).saveToken(tokenResponse.token());
-                                new BusinessLogic(LoginActivity.this).connect(tokenResponse.token());
-                                finish();
+                                connect(tokenResponse.token());
                             }
                         },
                         new Consumer<Throwable>() {
@@ -79,5 +82,29 @@ public class LoginActivity extends AppCompatActivity {
                             }
                         }
                 );
+    }
+
+    private void connect(String token) {
+        RongIM.connect(token, new RongIMClient.ConnectCallback() {
+            @Override
+            public void onTokenIncorrect() {
+
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                toMainActivity();
+                finish();
+            }
+
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+                Toast.makeText(LoginActivity.this, "连接失败", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void toMainActivity() {
+        startActivity(new Intent(this, MainActivity.class));
     }
 }

@@ -7,6 +7,7 @@ import android.content.Context;
 import com.example.bu2zh.rongdemo.rong.message.CustomizeMessage;
 import com.example.bu2zh.rongdemo.rong.message.CustomizeMessageItemProvider;
 import com.example.bu2zh.rongdemo.rong.plugin.MyExtensionModule;
+import com.example.bu2zh.rongdemo.utils.MyToast;
 
 import java.util.List;
 
@@ -50,7 +51,8 @@ public class App extends Application {
         setMyExtensionModule();
 
         AppContext.getInstance().init(getApplicationContext());
-        AppContext.getInstance().registerReceiveMessageListener();
+
+        MyToast.init(getApplicationContext());
     }
 
     public static String getCurProcessName(Context context) {
