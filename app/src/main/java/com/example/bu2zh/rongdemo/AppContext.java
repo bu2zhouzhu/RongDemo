@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.bu2zh.rongdemo.custommessage.CustomizeMessage;
+import com.example.bu2zh.rongdemo.rong.message.CustomizeMessage;
 
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Message;

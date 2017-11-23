@@ -1,14 +1,10 @@
-package com.example.bu2zh.rongdemo.customplugin;
+package com.example.bu2zh.rongdemo.rong.plugin;
 
 import java.util.List;
 
 import io.rong.imkit.DefaultExtensionModule;
 import io.rong.imkit.plugin.IPluginModule;
 import io.rong.imlib.model.Conversation;
-
-/**
- * Created by yanlongluo on 23/11/2017.
- */
 
 public class MyExtensionModule extends DefaultExtensionModule {
     private MyPlugin myPlugin;

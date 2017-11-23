@@ -1,4 +1,4 @@
-package com.example.bu2zh.rongdemo.custommessage;
+package com.example.bu2zh.rongdemo.rong.message;
 
 
 import android.os.Parcel;

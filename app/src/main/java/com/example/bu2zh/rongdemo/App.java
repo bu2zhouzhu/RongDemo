@@ -4,9 +4,9 @@ import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 
-import com.example.bu2zh.rongdemo.custommessage.CustomizeMessage;
-import com.example.bu2zh.rongdemo.custommessage.CustomizeMessageItemProvider;
-import com.example.bu2zh.rongdemo.customplugin.MyExtensionModule;
+import com.example.bu2zh.rongdemo.rong.message.CustomizeMessage;
+import com.example.bu2zh.rongdemo.rong.message.CustomizeMessageItemProvider;
+import com.example.bu2zh.rongdemo.rong.plugin.MyExtensionModule;
 
 import java.util.List;
 

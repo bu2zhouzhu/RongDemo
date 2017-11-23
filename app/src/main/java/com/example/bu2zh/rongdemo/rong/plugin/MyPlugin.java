@@ -1,4 +1,4 @@
-package com.example.bu2zh.rongdemo.customplugin;
+package com.example.bu2zh.rongdemo.rong.plugin;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,7 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
 
 import com.example.bu2zh.rongdemo.R;
-import com.example.bu2zh.rongdemo.custommessage.CustomizeMessage;
+import com.example.bu2zh.rongdemo.rong.message.CustomizeMessage;
 
 import io.rong.imkit.RongExtension;
 import io.rong.imkit.RongIM;

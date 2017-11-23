@@ -1,14 +1,16 @@
-package com.example.bu2zh.rongdemo;
+package com.example.bu2zh.rongdemo.rong.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import com.example.bu2zh.rongdemo.R;
+
 /**
  * Created by bu2zh on 2017/11/15.
  */
 
-public class SubConversationListActivtiy extends AppCompatActivity {
+public class SubConversationListActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
