@@ -40,7 +40,7 @@ public class AppContext {
     }
 
     void registerReceiveMessageListener() {
-        RongIMClient.setOnReceiveMessageListener(onReceiveMessageListener);
+//        RongIMClient.setOnReceiveMessageListener(onReceiveMessageListener);
     }
 
     /**
@@ -52,7 +52,6 @@ public class AppContext {
             if (message.getContent() instanceof TextMessage) {
                 Log.d(TAG, "收到文本消息: " + ((TextMessage) message.getContent()).getContent());
                 Log.d(TAG, "文本消息的附加信息: " + ((TextMessage) message.getContent()).getExtra() + '\n');
-                setMessageRead(message); //设置收到的消息为已读消息
             } else if (message.getContent() instanceof ImageMessage) {
                 Log.d(TAG, "收到图片消息, Uri --> " + ((ImageMessage) message.getContent()).getThumUri() + '\n');
             } else if (message.getContent() instanceof VoiceMessage) {

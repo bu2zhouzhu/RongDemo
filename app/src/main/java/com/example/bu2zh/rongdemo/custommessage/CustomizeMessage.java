@@ -21,8 +21,16 @@ public class CustomizeMessage extends MessageContent {
 
     private String mContent;
 
+    public CustomizeMessage(String content) {
+        mContent = content;
+    }
+
     public String getContent() {
         return mContent;
+    }
+
+    public static CustomizeMessage obtain(long time, String content) {
+        return new CustomizeMessage(content);
     }
 
     /**
