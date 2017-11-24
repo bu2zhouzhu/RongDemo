@@ -20,6 +20,8 @@ public class MainActivity extends BaseActivity {
     void onConversationListClick() {
         Map<String, Boolean> supportedConversation = new HashMap<>();
         supportedConversation.put(Conversation.ConversationType.PRIVATE.getName(), false);
+        supportedConversation.put(Conversation.ConversationType.SYSTEM.getName(), false);
+        supportedConversation.put(Conversation.ConversationType.DISCUSSION.getName(), false);
         RongIM.getInstance().startConversationList(this, supportedConversation);
     }
 
