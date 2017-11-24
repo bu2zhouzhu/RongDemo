@@ -5,7 +5,7 @@ import android.app.Application;
 import android.content.Context;
 
 import com.example.bu2zh.rongdemo.rong.RongConfig;
-import com.example.bu2zh.rongdemo.rong.plugin.MyExtensionModule;
+import com.example.bu2zh.rongdemo.rong.custom.message.MyExtensionModule;
 import com.example.bu2zh.rongdemo.utils.MyToast;
 
 import java.util.List;

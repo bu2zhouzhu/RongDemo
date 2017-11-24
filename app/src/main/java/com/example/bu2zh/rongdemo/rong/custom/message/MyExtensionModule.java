@@ -1,4 +1,4 @@
-package com.example.bu2zh.rongdemo.rong.plugin;
+package com.example.bu2zh.rongdemo.rong.custom.message;
 
 import java.util.List;
 

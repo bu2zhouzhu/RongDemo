@@ -1,4 +1,4 @@
-package com.example.bu2zh.rongdemo.rong.message;
+package com.example.bu2zh.rongdemo.rong.custom.message;
 
 import android.content.Context;
 import android.text.Spannable;

@@ -11,9 +11,9 @@ import com.example.bu2zh.rongdemo.rong.listener.MyConversationBehaviorListener;
 import com.example.bu2zh.rongdemo.rong.listener.MyConversationListBehaviorListener;
 import com.example.bu2zh.rongdemo.rong.listener.MyReceiveMessageListener;
 import com.example.bu2zh.rongdemo.rong.listener.MySendMessageListener;
-import com.example.bu2zh.rongdemo.rong.message.CustomizeMessage;
-import com.example.bu2zh.rongdemo.rong.message.CustomizeMessageItemProvider;
-import com.example.bu2zh.rongdemo.rong.plugin.MyExtensionModule;
+import com.example.bu2zh.rongdemo.rong.custom.message.CustomizeMessage;
+import com.example.bu2zh.rongdemo.rong.custom.message.CustomizeMessageItemProvider;
+import com.example.bu2zh.rongdemo.rong.custom.message.MyExtensionModule;
 
 import java.util.List;
 
