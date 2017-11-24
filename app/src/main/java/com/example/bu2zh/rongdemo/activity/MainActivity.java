@@ -38,6 +38,7 @@ public class MainActivity extends BaseActivity {
         CSCustomServiceInfo.Builder csBuilder = new CSCustomServiceInfo.Builder();
         CSCustomServiceInfo csInfo = csBuilder.nickName("融云").build();
         String id = "KEFU151150386626795";
+        // 打开客服聊天界面
         RongIM.getInstance().startCustomerServiceChat(this, id, "在线客服",csInfo);
     }
 
