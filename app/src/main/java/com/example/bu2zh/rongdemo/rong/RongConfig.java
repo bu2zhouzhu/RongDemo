@@ -4,6 +4,8 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.net.Uri;
 
+import com.example.bu2zh.rongdemo.rong.custom.ui.conversation.MyTextMessageItemProvider;
+import com.example.bu2zh.rongdemo.rong.custom.ui.conversationlist.MyPrivateConversationProvider;
 import com.example.bu2zh.rongdemo.rong.listener.MyConnectionStatusListener;
 import com.example.bu2zh.rongdemo.rong.listener.MyConversationBehaviorListener;
 import com.example.bu2zh.rongdemo.rong.listener.MyConversationListBehaviorListener;
@@ -69,9 +71,14 @@ public class RongConfig {
         // 注册监听器
         initListener();
 
-        RongIM.getInstance().enableNewComingMessageIcon(true);
-        RongIM.getInstance().enableUnreadMessageIcon(true);
+        // 会话列表自定义
+        RongIM.getInstance().registerConversationTemplate(new MyPrivateConversationProvider());
 
+        // 会话页面自定义
+        RongIM.registerMessageTemplate(new MyTextMessageItemProvider());
+
+        RongIM.getInstance().enableNewComingMessageIcon(true); //显示新消息提醒
+        RongIM.getInstance().enableUnreadMessageIcon(true); //显示未读消息数目
     }
 
     private void initListener() {
