@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.example.bu2zh.rongdemo.R;
 
 /**
- * Created by bu2zh on 2017/11/15.
+ * 配置聚合会话列表
  */
 
 public class SubConversationListActivity extends AppCompatActivity {

@@ -23,6 +23,7 @@ public class MainActivity extends BaseActivity {
         supportedConversation.put(Conversation.ConversationType.PRIVATE.getName(), false);
         supportedConversation.put(Conversation.ConversationType.SYSTEM.getName(), false);
         supportedConversation.put(Conversation.ConversationType.DISCUSSION.getName(), false);
+        // 启动会话列表界面
         RongIM.getInstance().startConversationList(this, supportedConversation);
     }
 
@@ -33,6 +34,7 @@ public class MainActivity extends BaseActivity {
 
     @OnClick(R.id.logout)
     void onLogoutClick() {
+        // 断开连接
         RongIM.getInstance().logout();
         new ConfigSp(this).saveToken(null);
         startActivity(new Intent(this, LoginActivity.class));

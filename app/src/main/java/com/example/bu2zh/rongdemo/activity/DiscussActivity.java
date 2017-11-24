@@ -23,6 +23,7 @@ public class DiscussActivity extends BaseActivity {
     void onCreateDiscussionClick() {
         String name = "讨论组";
         List<String> userIdList = Arrays.asList("1", "2", "3", "4", "5");
+        // 创建讨论组
         RongIM.getInstance().createDiscussion(name, userIdList, new RongIMClient.CreateDiscussionCallback() {
             @Override
             public void onSuccess(String s) {
@@ -43,6 +44,7 @@ public class DiscussActivity extends BaseActivity {
             MyToast.show("请先创建讨论组");
             return;
         }
+        // 打开讨论组聊天窗口
         RongIM.getInstance().startDiscussionChat(this, mDiscussionId, "讨论组");
     }
 

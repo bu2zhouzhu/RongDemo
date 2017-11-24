@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.example.bu2zh.rongdemo.R;
 
 /**
- * Created by bu2zh on 2017/11/15.
+ * 配置会话界面
  */
 
 public class ConversationActivity extends AppCompatActivity {

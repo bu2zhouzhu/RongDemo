@@ -32,6 +32,7 @@ public class RongConfig {
         public UserInfo getUserInfo(String s) {
             Uri uri = Uri.parse("http://rongcloud-web.qiniudn.com/docs_demo_rongcloud_logo.png");
             UserInfo userinfo = new UserInfo(s, "test", uri);
+            // 刷新用户信息
             RongIM.getInstance().refreshUserInfoCache(userinfo);
             return userinfo;
         }
@@ -54,6 +55,7 @@ public class RongConfig {
         // io.rong.push 为融云 push 进程名称，不可修改。
         if (context.getApplicationInfo().packageName.equals(getCurProcessName(context.getApplicationContext())) ||
                 "io.rong.push".equals(getCurProcessName(context.getApplicationContext()))) {
+            // 初始化
             RongIM.init(context);
         }
 

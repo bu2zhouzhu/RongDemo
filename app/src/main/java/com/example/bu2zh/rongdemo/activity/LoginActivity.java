@@ -85,6 +85,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void connect(String token) {
+        // 连接服务器
         RongIM.connect(token, new RongIMClient.ConnectCallback() {
             @Override
             public void onTokenIncorrect() {
