@@ -29,6 +29,8 @@ public class AppContext {
 
     private AppContext() {
         initListener();
+        RongIM.getInstance().enableNewComingMessageIcon(true);
+        RongIM.getInstance().enableUnreadMessageIcon(true);
     }
 
     static AppContext getInstance() {
