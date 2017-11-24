@@ -85,7 +85,7 @@
         </provider>
 
         <receiver
-            android:name=".rong.push.DemoNotificationReceiver"
+            android:name=".rong.push.RongNotificationReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="io.rong.push.intent.MESSAGE_ARRIVED" />
