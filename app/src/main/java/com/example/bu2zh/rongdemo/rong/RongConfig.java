@@ -3,8 +3,12 @@ package com.example.bu2zh.rongdemo.rong;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.net.Uri;
-import android.util.Log;
 
+import com.example.bu2zh.rongdemo.rong.listener.MyConnectionStatusListener;
+import com.example.bu2zh.rongdemo.rong.listener.MyConversationBehaviorListener;
+import com.example.bu2zh.rongdemo.rong.listener.MyConversationListBehaviorListener;
+import com.example.bu2zh.rongdemo.rong.listener.MyReceiveMessageListener;
+import com.example.bu2zh.rongdemo.rong.listener.MySendMessageListener;
 import com.example.bu2zh.rongdemo.rong.message.CustomizeMessage;
 import com.example.bu2zh.rongdemo.rong.message.CustomizeMessageItemProvider;
 import com.example.bu2zh.rongdemo.rong.plugin.MyExtensionModule;
@@ -15,8 +19,6 @@ import io.rong.imkit.DefaultExtensionModule;
 import io.rong.imkit.IExtensionModule;
 import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
-import io.rong.imlib.RongIMClient;
-import io.rong.imlib.model.Message;
 import io.rong.imlib.model.UserInfo;
 
 /**
@@ -73,20 +75,24 @@ public class RongConfig {
     }
 
     private void initListener() {
+        // 发送消息监听器
+        RongIM.getInstance().setSendMessageListener(new MySendMessageListener());
+
         // 接收消息监听器
-        RongIM.setOnReceiveMessageListener(onReceiveMessageListener);
+        RongIM.setOnReceiveMessageListener(new MyReceiveMessageListener());
+
+        // 连接状态监听器
+        RongIM.setConnectionStatusListener(new MyConnectionStatusListener());
+
+        // 会话列表操作监听器
+        RongIM.setConversationListBehaviorListener(new MyConversationListBehaviorListener());
+
+        // 会话界面操作监听器
+        RongIM.setConversationBehaviorListener(new MyConversationBehaviorListener());
 
         // 设置用户信息提供者
         RongIM.setUserInfoProvider(mUserInfoProvider, true);
     }
-
-    private RongIMClient.OnReceiveMessageListener onReceiveMessageListener = new RongIMClient.OnReceiveMessageListener() {
-        @Override
-        public boolean onReceived(Message message, int i) {
-            Log.d(TAG, "收到消息");
-            return false;
-        }
-    };
 
     private static String getCurProcessName(Context context) {
         int pid = android.os.Process.myPid();
