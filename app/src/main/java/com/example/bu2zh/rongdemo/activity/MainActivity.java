@@ -28,11 +28,6 @@ public class MainActivity extends BaseActivity {
         startActivity(new Intent(this, DiscussActivity.class));
     }
 
-    @OnClick(R.id.group)
-    void onGroupClick() {
-
-    }
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -71,9 +71,6 @@
         <activity
             android:name=".activity.DiscussActivity"
             android:label="@string/discussion" />
-        <activity
-            android:name=".activity.GroupActivity"
-            android:label="@string/group" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
