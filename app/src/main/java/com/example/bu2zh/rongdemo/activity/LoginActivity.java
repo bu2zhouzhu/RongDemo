@@ -52,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
-    private void getToken(String userId, String userName, String portrait) {
+    private void getToken(final String userId, String userName, String portrait) {
         final String nonce = Integer.toString(new Random().nextInt(1000));
         final String timeStamp = Long.toString(System.currentTimeMillis());
         final String signature = SHA1Tool.SHA1(Constants.APP_SECRET + nonce + timeStamp);
@@ -71,7 +71,9 @@ public class LoginActivity extends AppCompatActivity {
                         new Consumer<TokenResponse>() {
                             @Override
                             public void accept(TokenResponse tokenResponse) throws Exception {
-                                new ConfigSp(LoginActivity.this).saveToken(tokenResponse.token());
+                                ConfigSp sp = new ConfigSp(LoginActivity.this);
+                                sp.setToken(tokenResponse.token());
+                                sp.setId(userId);
                                 connect(tokenResponse.token());
                             }
                         },

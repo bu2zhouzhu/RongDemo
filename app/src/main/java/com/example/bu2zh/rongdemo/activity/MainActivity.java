@@ -3,6 +3,7 @@ package com.example.bu2zh.rongdemo.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.widget.TextView;
 
 import com.example.bu2zh.rongdemo.R;
 import com.example.bu2zh.rongdemo.base.BaseActivity;
@@ -11,12 +12,16 @@ import com.example.bu2zh.rongdemo.sp.ConfigSp;
 import java.util.HashMap;
 import java.util.Map;
 
+import butterknife.BindView;
 import butterknife.OnClick;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.CSCustomServiceInfo;
 import io.rong.imlib.model.Conversation;
 
 public class MainActivity extends BaseActivity {
+
+    @BindView(R.id.me)
+    TextView mMe;
 
     @OnClick(R.id.conversation_list)
     void onConversationListClick() {
@@ -46,7 +51,7 @@ public class MainActivity extends BaseActivity {
     void onLogoutClick() {
         // 断开连接
         RongIM.getInstance().logout();
-        new ConfigSp(this).saveToken(null);
+        new ConfigSp(this).clear();
         startActivity(new Intent(this, LoginActivity.class));
         finish();
     }
@@ -55,5 +60,8 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        String id = new ConfigSp(this).getId();
+        mMe.setText(getString(R.string.my_id, id));
     }
 }

@@ -7,6 +7,12 @@
     android:orientation="vertical"
     tools:context="com.example.bu2zh.rongdemo.activity.LoginActivity">
 
+    <TextView
+        android:id="@+id/me"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="我的id: "/>
+
     <Button
         android:id="@+id/conversation_list"
         android:layout_width="wrap_content"
