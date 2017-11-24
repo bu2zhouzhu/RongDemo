@@ -13,6 +13,7 @@ import java.util.Map;
 
 import butterknife.OnClick;
 import io.rong.imkit.RongIM;
+import io.rong.imlib.model.CSCustomServiceInfo;
 import io.rong.imlib.model.Conversation;
 
 public class MainActivity extends BaseActivity {
@@ -30,6 +31,14 @@ public class MainActivity extends BaseActivity {
     @OnClick(R.id.discuss_chat)
     void onDiscussClick() {
         startActivity(new Intent(this, DiscussActivity.class));
+    }
+
+    @OnClick(R.id.custom_service)
+    void onCustomServiceClick() {
+        CSCustomServiceInfo.Builder csBuilder = new CSCustomServiceInfo.Builder();
+        CSCustomServiceInfo csInfo = csBuilder.nickName("融云").build();
+        String id = "KEFU151150386626795";
+        RongIM.getInstance().startCustomerServiceChat(this, id, "在线客服",csInfo);
     }
 
     @OnClick(R.id.logout)

@@ -20,6 +20,12 @@
         android:text="@string/discussion"/>
 
     <Button
+        android:id="@+id/custom_service"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/custom_service"/>
+
+    <Button
         android:id="@+id/logout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
