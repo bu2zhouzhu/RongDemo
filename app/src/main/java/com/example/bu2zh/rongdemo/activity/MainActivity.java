@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import com.example.bu2zh.rongdemo.LoginActivity;
 import com.example.bu2zh.rongdemo.R;
 import com.example.bu2zh.rongdemo.base.BaseActivity;
+import com.example.bu2zh.rongdemo.sp.ConfigSp;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,6 +30,14 @@ public class MainActivity extends BaseActivity {
     @OnClick(R.id.discuss_chat)
     void onDiscussClick() {
         startActivity(new Intent(this, DiscussActivity.class));
+    }
+
+    @OnClick(R.id.logout)
+    void onLogoutClick() {
+        RongIM.getInstance().logout();
+        new ConfigSp(this).saveToken(null);
+        startActivity(new Intent(this, LoginActivity.class));
+        finish();
     }
 
     @Override

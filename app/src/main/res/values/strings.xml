@@ -8,4 +8,5 @@
     <string name="create_discussion">创建讨论组</string>
     <string name="start_discussion">启动讨论组</string>
     <string name="group">群组</string>
+    <string name="logout">退出登录</string>
 </resources>

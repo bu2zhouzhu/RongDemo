@@ -20,9 +20,9 @@
         android:text="@string/discussion"/>
 
     <Button
-        android:id="@+id/chat_room"
+        android:id="@+id/logout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/chat_room"/>
+        android:text="@string/logout"/>
 
 </LinearLayout>
