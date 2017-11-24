@@ -1,4 +1,4 @@
-package com.example.bu2zh.rongdemo;
+package com.example.bu2zh.rongdemo.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.widget.Toast;
 
-import com.example.bu2zh.rongdemo.activity.MainActivity;
 import com.example.bu2zh.rongdemo.sp.ConfigSp;
 
 import io.rong.imkit.RongIM;

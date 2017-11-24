@@ -1,4 +1,4 @@
-package com.example.bu2zh.rongdemo;
+package com.example.bu2zh.rongdemo.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,7 +8,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.bu2zh.model.TokenResponse;
-import com.example.bu2zh.rongdemo.activity.MainActivity;
+import com.example.bu2zh.rongdemo.R;
 import com.example.bu2zh.rongdemo.sp.ConfigSp;
 import com.example.bu2zh.rongdemo.utils.Constants;
 import com.example.bu2zh.rongdemo.utils.SHA1Tool;
