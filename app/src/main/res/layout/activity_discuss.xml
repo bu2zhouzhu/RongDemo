@@ -4,16 +4,24 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <EditText
+        android:id="@+id/discussion_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:hint="@string/discussion_name_hint"/>
+
+    <EditText
+        android:id="@+id/ids"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:hint="@string/create_discussion_hint"/>
+
     <Button
         android:id="@+id/create_discussion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/create_discussion" />
-
-    <Button
-        android:id="@+id/start_discussion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/start_discussion" />
 
 </LinearLayout>

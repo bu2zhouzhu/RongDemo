@@ -11,4 +11,6 @@
     <string name="logout">退出登录</string>
     <string name="custom_service">客服</string>
     <string name="my_id">我的id: %1$s</string>
+    <string name="create_discussion_hint">请输入成员id，以英文逗号分隔</string>
+    <string name="discussion_name_hint">请输入讨论组名称</string>
 </resources>

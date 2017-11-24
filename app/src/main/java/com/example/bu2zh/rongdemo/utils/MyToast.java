@@ -18,4 +18,8 @@ public class MyToast {
     public static void show(String text) {
         Toast.makeText(sContext, text, Toast.LENGTH_SHORT).show();
     }
+
+    public static void show(int resId) {
+        Toast.makeText(sContext, resId, Toast.LENGTH_SHORT).show();
+    }
 }
