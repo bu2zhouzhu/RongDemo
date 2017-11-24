@@ -1,21 +1,20 @@
-package com.example.bu2zh.rongdemo;
+package com.example.bu2zh.rongdemo.rong;
 
-import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
-import android.widget.Toast;
 
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.UserInfo;
 
-public class AppContext {
-    private static final String TAG = "AppContext";
-    private int mMessageId;
+/**
+ * 融云SDK配置类
+ */
+public class RongConfig {
+    private static final String TAG = "RongConfig";
 
-    private static AppContext appContext = new AppContext();
-    private Context mContext;
+    private static RongConfig sRongConfig = new RongConfig();
 
     private RongIM.UserInfoProvider mUserInfoProvider = new RongIM.UserInfoProvider() {
         @Override
@@ -27,26 +26,18 @@ public class AppContext {
         }
     };
 
-    private AppContext() {
+    private RongConfig() {
         initListener();
         RongIM.getInstance().enableNewComingMessageIcon(true);
         RongIM.getInstance().enableUnreadMessageIcon(true);
     }
 
-    static AppContext getInstance() {
-        return appContext;
+    public static RongConfig getInstance() {
+        return sRongConfig;
     }
 
-    public int getMessageId() {
-        return mMessageId;
-    }
+    public void init() {
 
-    private void setMessageId(int mMessageId) {
-        this.mMessageId = mMessageId;
-    }
-
-    void init(Context context) {
-        mContext = context.getApplicationContext();
     }
 
     private void initListener() {
@@ -64,17 +55,4 @@ public class AppContext {
             return false;
         }
     };
-
-    /**
-     * 设置消息为已读消息
-     */
-    private void setMessageRead(Message message) {
-        if (message.getMessageId() > 0) {
-            io.rong.imlib.model.Message.ReceivedStatus status = message.getReceivedStatus();
-            status.setRead();
-            message.setReceivedStatus(status);
-            RongIMClient.getInstance().setMessageReceivedStatus(message.getMessageId(), status, null);
-            Toast.makeText(mContext, "该条消息已设置为已读", Toast.LENGTH_LONG).show();
-        }
-    }
 }

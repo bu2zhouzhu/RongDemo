@@ -4,6 +4,7 @@ import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 
+import com.example.bu2zh.rongdemo.rong.RongConfig;
 import com.example.bu2zh.rongdemo.rong.message.CustomizeMessage;
 import com.example.bu2zh.rongdemo.rong.message.CustomizeMessageItemProvider;
 import com.example.bu2zh.rongdemo.rong.plugin.MyExtensionModule;
@@ -17,10 +18,6 @@ import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.AnnotationNotFoundException;
 import io.rong.imlib.RongIMClient;
-
-/**
- * Created by bu2zh on 2017/11/15.
- */
 
 public class App extends Application {
 
@@ -50,7 +47,7 @@ public class App extends Application {
 
         setMyExtensionModule();
 
-        AppContext.getInstance().init(getApplicationContext());
+        RongConfig.getInstance().init();
 
         MyToast.init(getApplicationContext());
     }
