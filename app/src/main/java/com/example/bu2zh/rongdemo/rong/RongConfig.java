@@ -4,16 +4,14 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.net.Uri;
 
-import com.example.bu2zh.rongdemo.rong.custom.ui.conversation.MyTextMessageItemProvider;
-import com.example.bu2zh.rongdemo.rong.custom.ui.conversationlist.MyPrivateConversationProvider;
+import com.example.bu2zh.rongdemo.rong.custom.message.CustomizeMessage;
+import com.example.bu2zh.rongdemo.rong.custom.message.CustomizeMessageItemProvider;
+import com.example.bu2zh.rongdemo.rong.custom.message.MyExtensionModule;
 import com.example.bu2zh.rongdemo.rong.listener.MyConnectionStatusListener;
 import com.example.bu2zh.rongdemo.rong.listener.MyConversationBehaviorListener;
 import com.example.bu2zh.rongdemo.rong.listener.MyConversationListBehaviorListener;
 import com.example.bu2zh.rongdemo.rong.listener.MyReceiveMessageListener;
 import com.example.bu2zh.rongdemo.rong.listener.MySendMessageListener;
-import com.example.bu2zh.rongdemo.rong.custom.message.CustomizeMessage;
-import com.example.bu2zh.rongdemo.rong.custom.message.CustomizeMessageItemProvider;
-import com.example.bu2zh.rongdemo.rong.custom.message.MyExtensionModule;
 
 import java.util.List;
 
@@ -66,19 +64,14 @@ public class RongConfig {
         // 注册自定义消息
         RongIM.registerMessageType(CustomizeMessage.class);
         RongIM.registerMessageTemplate(new CustomizeMessageItemProvider());
-        setMyExtensionModule();
+//        setMyExtensionModule();
 
         // 注册监听器
         initListener();
 
-        // 会话列表自定义
-        RongIM.getInstance().registerConversationTemplate(new MyPrivateConversationProvider());
-
-        // 会话页面自定义
-        RongIM.registerMessageTemplate(new MyTextMessageItemProvider());
-
         RongIM.getInstance().enableNewComingMessageIcon(true); //显示新消息提醒
         RongIM.getInstance().enableUnreadMessageIcon(true); //显示未读消息数目
+
     }
 
     private void initListener() {

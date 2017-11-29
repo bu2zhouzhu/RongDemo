@@ -7,16 +7,14 @@ import android.widget.TextView;
 
 import com.example.bu2zh.rongdemo.R;
 import com.example.bu2zh.rongdemo.base.BaseActivity;
+import com.example.bu2zh.rongdemo.rong.activity.ConversationActivity;
+import com.example.bu2zh.rongdemo.rong.activity.ConversationListActivity;
 import com.example.bu2zh.rongdemo.sp.ConfigSp;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.CSCustomServiceInfo;
-import io.rong.imlib.model.Conversation;
 
 public class MainActivity extends BaseActivity {
 
@@ -25,12 +23,14 @@ public class MainActivity extends BaseActivity {
 
     @OnClick(R.id.conversation_list)
     void onConversationListClick() {
-        Map<String, Boolean> supportedConversation = new HashMap<>();
-        supportedConversation.put(Conversation.ConversationType.PRIVATE.getName(), false);
-        supportedConversation.put(Conversation.ConversationType.SYSTEM.getName(), false);
-        supportedConversation.put(Conversation.ConversationType.DISCUSSION.getName(), false);
-        // 启动会话列表界面
-        RongIM.getInstance().startConversationList(this, supportedConversation);
+//        Map<String, Boolean> supportedConversation = new HashMap<>();
+//        supportedConversation.put(Conversation.ConversationType.PRIVATE.getName(), false);
+//        supportedConversation.put(Conversation.ConversationType.SYSTEM.getName(), false);
+//        supportedConversation.put(Conversation.ConversationType.DISCUSSION.getName(), false);
+//        // 启动会话列表界面
+//        RongIM.getInstance().startConversationList(this, supportedConversation);
+
+        startActivity(new Intent(this, ConversationListActivity.class));
     }
 
     @OnClick(R.id.discuss_chat)
@@ -54,6 +54,11 @@ public class MainActivity extends BaseActivity {
         new ConfigSp(this).clear();
         startActivity(new Intent(this, LoginActivity.class));
         finish();
+    }
+
+    @OnClick(R.id.test)
+    void onTestClick() {
+        startActivity(new Intent(this, ConversationActivity.class));
     }
 
     @Override

@@ -73,6 +73,8 @@
         <activity
             android:name=".activity.DiscussActivity"
             android:label="@string/discussion" />
+        <activity android:name=".rong.activity.MyConversationActivity" />
+        <!--<activity android:name=".rong.activity.TestActivity" />-->
 
         <provider
             android:name="android.support.v4.content.FileProvider"

@@ -15,7 +15,7 @@ import io.rong.imkit.model.UIMessage;
 import io.rong.imkit.widget.provider.IContainerItemProvider;
 import io.rong.imlib.model.Message;
 
-@ProviderTag(messageContent = CustomizeMessage.class)
+@ProviderTag(messageContent = CustomizeMessage.class, showPortrait = false)
 public class CustomizeMessageItemProvider extends IContainerItemProvider.MessageProvider<CustomizeMessage> {
 
     class ViewHolder {
@@ -36,7 +36,8 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
         ViewHolder holder = (ViewHolder) v.getTag();
 
         if (message.getMessageDirection() == Message.MessageDirection.SEND) {//消息方向，自己发送的
-            holder.message.setBackgroundResource(io.rong.imkit.R.drawable.rc_ic_bubble_right);
+//            holder.message.setBackgroundResource(io.rong.imkit.R.drawable.rc_ic_bubble_right);
+            holder.message.setBackgroundResource(R.drawable.bg_1);
         } else {
             holder.message.setBackgroundResource(io.rong.imkit.R.drawable.rc_ic_bubble_left);
         }

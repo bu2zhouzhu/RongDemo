@@ -4,10 +4,6 @@ import android.support.v7.app.AppCompatActivity;
 
 import butterknife.ButterKnife;
 
-/**
- * Created by yanlongluo on 23/11/2017.
- */
-
 public class BaseActivity extends AppCompatActivity {
 
     @Override
