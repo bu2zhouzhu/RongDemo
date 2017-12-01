@@ -11,6 +11,7 @@ import com.example.bu2zh.model.TokenResponse;
 import com.example.bu2zh.rongdemo.R;
 import com.example.bu2zh.rongdemo.sp.ConfigSp;
 import com.example.bu2zh.rongdemo.utils.Constants;
+import com.example.bu2zh.rongdemo.utils.MyToast;
 import com.example.bu2zh.rongdemo.utils.SHA1Tool;
 import com.example.network.ApiService;
 import com.example.network.RongApi;
@@ -91,7 +92,7 @@ public class LoginActivity extends AppCompatActivity {
         RongIM.connect(token, new RongIMClient.ConnectCallback() {
             @Override
             public void onTokenIncorrect() {
-
+                MyToast.show("token错误");
             }
 
             @Override

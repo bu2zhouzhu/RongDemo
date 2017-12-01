@@ -69,8 +69,10 @@ public class MyPlugin implements IPluginModule {
             f = pluginAdapter.getClass().getDeclaredField("mPluginModules");
             f.setAccessible(true);
             List<IPluginModule> pluginModules = (List<IPluginModule>) f.get(pluginAdapter);
-            MyPlugin myPlugin = (MyPlugin) pluginModules.get(pluginModules.size() - 1);
-            myPlugin.setTitle("change");
+            pluginModules.remove(pluginModules.size() - 1);
+            f = adapter.getClass().getDeclaredField("count");
+            f.setAccessible(true);
+            f.set(adapter, pluginModules.size());
             adapter.notifyDataSetChanged();
         } catch (NoSuchFieldException e) {
             e.printStackTrace();

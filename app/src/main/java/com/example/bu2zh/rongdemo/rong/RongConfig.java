@@ -7,6 +7,7 @@ import android.net.Uri;
 import com.example.bu2zh.rongdemo.rong.custom.message.CustomizeMessage;
 import com.example.bu2zh.rongdemo.rong.custom.message.CustomizeMessageItemProvider;
 import com.example.bu2zh.rongdemo.rong.custom.message.MyExtensionModule;
+import com.example.bu2zh.rongdemo.rong.custom.ui.conversationlist.MyPrivateConversationProvider;
 import com.example.bu2zh.rongdemo.rong.listener.MyConnectionStatusListener;
 import com.example.bu2zh.rongdemo.rong.listener.MyConversationBehaviorListener;
 import com.example.bu2zh.rongdemo.rong.listener.MyConversationListBehaviorListener;
@@ -61,6 +62,8 @@ public class RongConfig {
             RongIM.init(context);
         }
 
+        RongIM.getInstance().registerConversationTemplate(new MyPrivateConversationProvider());
+
         // 注册自定义消息
         RongIM.registerMessageType(CustomizeMessage.class);
         RongIM.registerMessageTemplate(new CustomizeMessageItemProvider());
@@ -71,6 +74,8 @@ public class RongConfig {
 
         RongIM.getInstance().enableNewComingMessageIcon(true); //显示新消息提醒
         RongIM.getInstance().enableUnreadMessageIcon(true); //显示未读消息数目
+
+
 
     }
 

@@ -20,10 +20,10 @@ public class SplashActivity extends Activity {
         String token = new ConfigSp(this).getToken();
         if (TextUtils.isEmpty(token)) {
             startActivity(new Intent(this, LoginActivity.class));
-            finish();
         } else {
-            connect(token);
+            toMainActivity();
         }
+        finish();
     }
 
     private void connect(String token) {

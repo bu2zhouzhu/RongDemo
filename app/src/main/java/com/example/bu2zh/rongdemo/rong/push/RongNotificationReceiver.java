@@ -1,6 +1,7 @@
 package com.example.bu2zh.rongdemo.rong.push;
 
 import android.content.Context;
+import android.util.Log;
 
 import io.rong.push.notification.PushMessageReceiver;
 import io.rong.push.notification.PushNotificationMessage;
@@ -12,6 +13,7 @@ import io.rong.push.notification.PushNotificationMessage;
 public class RongNotificationReceiver extends PushMessageReceiver {
     @Override
     public boolean onNotificationMessageArrived(Context context, PushNotificationMessage pushNotificationMessage) {
+        Log.d("Rong-Push", "推送");
         return false;
     }
 

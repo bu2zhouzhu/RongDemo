@@ -1,18 +1,14 @@
 package com.example.bu2zh.rongdemo;
 
-import android.app.ActivityManager;
 import android.app.Application;
-import android.content.Context;
+import android.text.TextUtils;
 
 import com.example.bu2zh.rongdemo.rong.RongConfig;
-import com.example.bu2zh.rongdemo.rong.custom.message.MyExtensionModule;
+import com.example.bu2zh.rongdemo.sp.ConfigSp;
 import com.example.bu2zh.rongdemo.utils.MyToast;
 
-import java.util.List;
-
-import io.rong.imkit.DefaultExtensionModule;
-import io.rong.imkit.IExtensionModule;
-import io.rong.imkit.RongExtensionManager;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 
 public class App extends Application {
 
@@ -20,35 +16,30 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         RongConfig.init(this);
+        String token = new ConfigSp(this).getToken();
+        if (!TextUtils.isEmpty(token)) {
+            connect(token);
+        }
         MyToast.init(getApplicationContext());
     }
 
-    public static String getCurProcessName(Context context) {
-        int pid = android.os.Process.myPid();
+    private void connect(String token) {
+        // 连接服务器
+        RongIM.connect(token, new RongIMClient.ConnectCallback() {
+            @Override
+            public void onTokenIncorrect() {
 
-        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-
-        for (ActivityManager.RunningAppProcessInfo appProcess : activityManager.getRunningAppProcesses()) {
-            if (appProcess.pid == pid)
-                return appProcess.processName;
-        }
-        return null;
-    }
-
-    public void setMyExtensionModule() {
-        List<IExtensionModule> moduleList = RongExtensionManager.getInstance().getExtensionModules();
-        IExtensionModule defaultModule = null;
-        if (moduleList != null) {
-            for (IExtensionModule module : moduleList) {
-                if (module instanceof DefaultExtensionModule) {
-                    defaultModule = module;
-                    break;
-                }
             }
-            if (defaultModule != null) {
-                RongExtensionManager.getInstance().unregisterExtensionModule(defaultModule);
-                RongExtensionManager.getInstance().registerExtensionModule(new MyExtensionModule());
+
+            @Override
+            public void onSuccess(String s) {
+
             }
-        }
+
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+
+            }
+        });
     }
 }

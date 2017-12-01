@@ -7,7 +7,6 @@ import android.widget.TextView;
 
 import com.example.bu2zh.rongdemo.R;
 import com.example.bu2zh.rongdemo.base.BaseActivity;
-import com.example.bu2zh.rongdemo.rong.activity.ConversationActivity;
 import com.example.bu2zh.rongdemo.rong.activity.ConversationListActivity;
 import com.example.bu2zh.rongdemo.sp.ConfigSp;
 
@@ -58,7 +57,7 @@ public class MainActivity extends BaseActivity {
 
     @OnClick(R.id.test)
     void onTestClick() {
-        startActivity(new Intent(this, ConversationActivity.class));
+        startActivity(new Intent(this, TestActivity.class));
     }
 
     @Override

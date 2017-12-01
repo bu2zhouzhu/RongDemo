@@ -74,6 +74,7 @@
             android:name=".activity.DiscussActivity"
             android:label="@string/discussion" />
         <activity android:name=".rong.activity.MyConversationActivity" />
+        <activity android:name=".activity.TestActivity" />
         <!--<activity android:name=".rong.activity.TestActivity" />-->
 
         <provider
