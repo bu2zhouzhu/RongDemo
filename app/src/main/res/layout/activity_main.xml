@@ -32,6 +32,12 @@
         android:text="@string/custom_service"/>
 
     <Button
+        android:id="@+id/refresh_user_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="更新用户信息"/>
+
+    <Button
         android:id="@+id/logout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

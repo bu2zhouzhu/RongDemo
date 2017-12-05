@@ -7,6 +7,7 @@ import android.net.Uri;
 import com.example.bu2zh.rongdemo.rong.custom.message.CustomizeMessage;
 import com.example.bu2zh.rongdemo.rong.custom.message.CustomizeMessageItemProvider;
 import com.example.bu2zh.rongdemo.rong.custom.message.MyExtensionModule;
+import com.example.bu2zh.rongdemo.rong.custom.message.MyTextMessageItemProvider;
 import com.example.bu2zh.rongdemo.rong.custom.ui.conversationlist.MyPrivateConversationProvider;
 import com.example.bu2zh.rongdemo.rong.listener.MyConnectionStatusListener;
 import com.example.bu2zh.rongdemo.rong.listener.MyConversationBehaviorListener;
@@ -49,33 +50,29 @@ public class RongConfig {
     }
 
     public static void init(Context context) {
-        getInstance().config(context);
+        // OnCreate 会被多个进程重入，这段保护代码，确保只有您需要使用 RongIMClient 的进程执行了 init。
+        if (context.getApplicationInfo().packageName.equals(getCurProcessName(context.getApplicationContext()))) {
+            getInstance().config(context);
+        }
     }
 
     private void config(Context context) {
 
-        // OnCreate 会被多个进程重入，这段保护代码，确保只有您需要使用 RongIMClient 的进程和 Push 进程执行了 init。
-        // io.rong.push 为融云 push 进程名称，不可修改。
-        if (context.getApplicationInfo().packageName.equals(getCurProcessName(context.getApplicationContext())) ||
-                "io.rong.push".equals(getCurProcessName(context.getApplicationContext()))) {
-            // 初始化
-            RongIM.init(context);
-        }
+        RongIM.init(context);
 
         RongIM.getInstance().registerConversationTemplate(new MyPrivateConversationProvider());
 
         // 注册自定义消息
         RongIM.registerMessageType(CustomizeMessage.class);
         RongIM.registerMessageTemplate(new CustomizeMessageItemProvider());
-//        setMyExtensionModule();
+        RongIM.registerMessageTemplate(new MyTextMessageItemProvider());
+        setMyExtensionModule();
 
         // 注册监听器
         initListener();
 
         RongIM.getInstance().enableNewComingMessageIcon(true); //显示新消息提醒
         RongIM.getInstance().enableUnreadMessageIcon(true); //显示未读消息数目
-
-
 
     }
 

@@ -2,6 +2,7 @@ package com.example.bu2zh.rongdemo;
 
 import android.app.Application;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.example.bu2zh.rongdemo.rong.RongConfig;
 import com.example.bu2zh.rongdemo.sp.ConfigSp;
@@ -21,6 +22,7 @@ public class App extends Application {
             connect(token);
         }
         MyToast.init(getApplicationContext());
+        Log.d("Apppp", "onCreate");
     }
 
     private void connect(String token) {

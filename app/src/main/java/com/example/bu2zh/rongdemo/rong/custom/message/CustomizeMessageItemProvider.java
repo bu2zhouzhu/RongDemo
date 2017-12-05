@@ -3,6 +3,7 @@ package com.example.bu2zh.rongdemo.rong.custom.message;
 import android.content.Context;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,7 +52,7 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
 
     @Override
     public void onItemClick(View view, int position, CustomizeMessage content, UIMessage message) {
-
+        Log.d("自定义", "点击");
     }
 
 }

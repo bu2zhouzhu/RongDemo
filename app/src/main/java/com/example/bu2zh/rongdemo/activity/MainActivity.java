@@ -46,6 +46,11 @@ public class MainActivity extends BaseActivity {
         RongIM.getInstance().startCustomerServiceChat(this, id, "在线客服",csInfo);
     }
 
+    @OnClick(R.id.refresh_user_info)
+    void onRefreshUserInfoClick() {
+        startActivity(new Intent(this, RefreshUserInfoActivity.class));
+    }
+
     @OnClick(R.id.logout)
     void onLogoutClick() {
         // 断开连接

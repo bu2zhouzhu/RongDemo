@@ -75,6 +75,8 @@
             android:label="@string/discussion" />
         <activity android:name=".rong.activity.MyConversationActivity" />
         <activity android:name=".activity.TestActivity" />
+        <activity android:name=".activity.RefreshUserInfoActivity" />
+        <activity android:name=".rong.activity.PrivateChatDetailActivity" />
         <!--<activity android:name=".rong.activity.TestActivity" />-->
 
         <provider
