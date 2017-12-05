@@ -60,9 +60,9 @@ public class MainActivity extends BaseActivity {
         finish();
     }
 
-    @OnClick(R.id.test)
-    void onTestClick() {
-        startActivity(new Intent(this, TestActivity.class));
+    @OnClick(R.id.send_message)
+    void onSendMessageClick() {
+        startActivity(new Intent(this, SendMessageActivity.class));
     }
 
     @Override
