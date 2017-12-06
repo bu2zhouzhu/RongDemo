@@ -70,6 +70,8 @@ public class ConversationActivity extends BaseActivity {
                 mRightButton.setVisibility(View.GONE);
                 mRightButton.setClickable(false);
             }
+
+
         }
 
     }

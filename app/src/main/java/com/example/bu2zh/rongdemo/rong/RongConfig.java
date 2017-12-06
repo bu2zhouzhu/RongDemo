@@ -8,7 +8,6 @@ import com.example.bu2zh.rongdemo.rong.custom.message.CustomizeMessage;
 import com.example.bu2zh.rongdemo.rong.custom.message.CustomizeMessageItemProvider;
 import com.example.bu2zh.rongdemo.rong.custom.message.MyExtensionModule;
 import com.example.bu2zh.rongdemo.rong.custom.message.MyTextMessageItemProvider;
-import com.example.bu2zh.rongdemo.rong.custom.ui.conversationlist.MyPrivateConversationProvider;
 import com.example.bu2zh.rongdemo.rong.listener.MyConnectionStatusListener;
 import com.example.bu2zh.rongdemo.rong.listener.MyConversationBehaviorListener;
 import com.example.bu2zh.rongdemo.rong.listener.MyConversationListBehaviorListener;
@@ -60,7 +59,8 @@ public class RongConfig {
 
         RongIM.init(context);
 
-        RongIM.getInstance().registerConversationTemplate(new MyPrivateConversationProvider());
+        // 自定义会话列表
+//        RongIM.getInstance().registerConversationTemplate(new MyPrivateConversationProvider());
 
         // 注册自定义消息
         RongIM.registerMessageType(CustomizeMessage.class);

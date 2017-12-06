@@ -78,6 +78,7 @@
         <activity android:name=".activity.RefreshUserInfoActivity" />
         <activity android:name=".rong.activity.PrivateChatDetailActivity" />
         <activity android:name=".activity.SendMessageActivity" />
+        <activity android:name=".activity.GroupActivity" />
         <!--<activity android:name=".rong.activity.TestActivity" />-->
 
         <provider

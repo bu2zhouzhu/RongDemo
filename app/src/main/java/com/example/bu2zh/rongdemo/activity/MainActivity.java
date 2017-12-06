@@ -65,6 +65,11 @@ public class MainActivity extends BaseActivity {
         startActivity(new Intent(this, SendMessageActivity.class));
     }
 
+    @OnClick(R.id.group)
+    void onGroupClick() {
+        startActivity(new Intent(this, GroupActivity.class));
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
