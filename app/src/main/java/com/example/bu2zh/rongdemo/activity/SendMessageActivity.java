@@ -3,6 +3,7 @@ package com.example.bu2zh.rongdemo.activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.EditText;
 
 import com.example.bu2zh.rongdemo.R;
@@ -16,24 +17,30 @@ import io.rong.imlib.IRongCallback;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
+import io.rong.imlib.model.MessageContent;
+import io.rong.message.CommandMessage;
 import io.rong.message.TextMessage;
-
-/**
- * Created by yanlongluo on 05/12/2017.
- */
 
 public class SendMessageActivity extends BaseActivity {
 
     @BindView(R.id.target_id_et)
     EditText mTargetIdEt;
 
-    @OnClick(R.id.send_text_message)
-    void onSendTextMessageClick() {
+    @OnClick({R.id.send_text_message, R.id.send_command_message})
+    void onSendMessageClick(View v) {
         if (!isValid()) {
             MyToast.show("请输入用户id");
             return;
         }
-        TextMessage content = TextMessage.obtain("hi");
+        MessageContent content = null;
+        switch (v.getId()) {
+            case R.id.send_text_message:
+                content = TextMessage.obtain("hi");
+                break;
+            case R.id.send_command_message:
+                content = CommandMessage.obtain("cmdName", "cmdData");
+                break;
+        }
         String targetId = mTargetIdEt.getText().toString();
         Conversation.ConversationType conversationType = Conversation.ConversationType.PRIVATE;
         Message message = Message.obtain(targetId, conversationType, content);
