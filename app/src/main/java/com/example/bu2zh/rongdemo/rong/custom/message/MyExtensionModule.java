@@ -7,16 +7,11 @@ import io.rong.imkit.plugin.IPluginModule;
 import io.rong.imlib.model.Conversation;
 
 public class MyExtensionModule extends DefaultExtensionModule {
-    private MyPlugin myPlugin;
-
-    public MyExtensionModule() {
-        myPlugin = new MyPlugin();
-    }
 
     @Override
     public List<IPluginModule> getPluginModules(Conversation.ConversationType conversationType) {
         List<IPluginModule> pluginModules =  super.getPluginModules(conversationType);
-        pluginModules.add(myPlugin);
+        pluginModules.add(new MyPlugin());
         return pluginModules;
     }
 }
