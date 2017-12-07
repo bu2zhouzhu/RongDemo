@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.bu2zh.rongdemo.R;
+import com.example.bu2zh.rongdemo.activity.GroupDetailActivity;
 import com.example.bu2zh.rongdemo.base.BaseActivity;
 
 import java.util.Locale;
@@ -42,9 +43,15 @@ public class ConversationActivity extends BaseActivity {
         UriFragment fragment = (UriFragment) getSupportFragmentManager().getFragments().get(0);
         mTargetId = fragment.getUri().getQueryParameter("targetId");
 
+        Intent intent = null;
         if (mConversationType == Conversation.ConversationType.PRIVATE) {
-            Intent intent = new Intent(this, PrivateChatDetailActivity.class);
+            intent = new Intent(this, PrivateChatDetailActivity.class);
             intent.putExtra("conversationType", Conversation.ConversationType.PRIVATE);
+        } else if (mConversationType == Conversation.ConversationType.GROUP) {
+            intent = new Intent(this, GroupDetailActivity.class);
+            intent.putExtra("conversationType", Conversation.ConversationType.GROUP);
+        }
+        if (intent != null) {
             intent.putExtra("TargetId", mTargetId);
             startActivity(intent);
         }

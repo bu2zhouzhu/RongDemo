@@ -23,7 +23,7 @@ public class ConversationListActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conversationlist);
 
-        ConversationListFragment fragment = new MyConversationListFragment();
+        ConversationListFragment fragment = new ConversationListFragment();
 
         Uri uri = Uri.parse("rong://" + getApplicationInfo().packageName).buildUpon()
                 .appendPath("conversationlist")

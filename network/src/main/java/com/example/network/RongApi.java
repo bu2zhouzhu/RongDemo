@@ -1,5 +1,6 @@
 package com.example.network;
 
+import com.example.bu2zh.model.SimpleResponse;
 import com.example.bu2zh.model.TokenResponse;
 
 import java.util.Map;
@@ -19,6 +20,15 @@ public interface RongApi {
     @POST("user/getToken.json")
     @FormUrlEncoded
     Single<TokenResponse> getToken(
+            @HeaderMap Map<String, String> headers,
+            @Field("userId") String userId,
+            @Field("name") String userName,
+            @Field("portraitUri") String portraitUri
+    );
+
+    @POST("group/create.json")
+    @FormUrlEncoded
+    Single<SimpleResponse> createGroup(
             @HeaderMap Map<String, String> headers,
             @Field("userId") String userId,
             @Field("name") String userName,
