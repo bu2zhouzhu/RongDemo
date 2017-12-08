@@ -3,6 +3,7 @@ package com.example.bu2zh.rongdemo.rong;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.net.Uri;
+import android.util.Log;
 
 import com.example.bu2zh.rongdemo.rong.custom.message.CustomizeMessage;
 import com.example.bu2zh.rongdemo.rong.custom.message.CustomizeMessageItemProvider;
@@ -52,6 +53,7 @@ public class RongConfig {
         // OnCreate 会被多个进程重入，这段保护代码，确保只有您需要使用 RongIMClient 的进程执行了 init。
         if (context.getApplicationInfo().packageName.equals(getCurProcessName(context.getApplicationContext()))) {
             getInstance().config(context);
+            Log.d(TAG, getCurProcessName(context.getApplicationContext()) + " init");
         }
     }
 

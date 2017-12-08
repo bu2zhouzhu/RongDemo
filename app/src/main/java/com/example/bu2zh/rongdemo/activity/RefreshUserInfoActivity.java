@@ -18,6 +18,8 @@ import io.rong.imlib.model.UserInfo;
 
 public class RefreshUserInfoActivity extends BaseActivity {
 
+    @BindView(R.id.id)
+    EditText mIdEt;
     @BindView(R.id.name)
     EditText mNameEt;
     @BindView(R.id.avatar)
@@ -25,6 +27,7 @@ public class RefreshUserInfoActivity extends BaseActivity {
 
     @OnClick(R.id.ok)
     void onClick() {
+        String id = mIdEt.getText().toString();
         String name = mNameEt.getText().toString();
         String avatar = mAvatarEt.getText().toString();
         if (TextUtils.isEmpty(name)) {
@@ -34,9 +37,12 @@ public class RefreshUserInfoActivity extends BaseActivity {
         if (TextUtils.isEmpty(avatar)) {
             MyToast.show("请填写头像链接");
             return;
-        }String userId = new ConfigSp(this).getId();
+        }
+        if (TextUtils.isEmpty(id)) {
+            id = new ConfigSp(this).getId();
+        }
         Uri uri = Uri.parse(avatar);
-        UserInfo userinfo = new UserInfo(userId, name, uri);
+        UserInfo userinfo = new UserInfo(id, name, uri);
         RongIM.getInstance().refreshUserInfoCache(userinfo);
     }
 

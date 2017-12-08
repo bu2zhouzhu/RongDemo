@@ -4,19 +4,37 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 
 import com.example.bu2zh.rongdemo.R;
 import com.example.bu2zh.rongdemo.base.BaseActivity;
 
+import butterknife.OnClick;
+import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
 import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.UserInfo;
 
 /**
  * 配置会话列表
  */
 
 public class ConversationListActivity extends BaseActivity {
+
+    private boolean b;
+
+    @OnClick(R.id.btn)
+    void onClick() {
+        String avatar;
+        if (b) {
+            avatar = "http://rongcloud-web.qiniudn.com/docs_demo_rongcloud_logo.png";
+        } else {
+            avatar = "http://desk.fd.zol-img.com.cn/t_s720x360c5/g5/M00/0D/0F/ChMkJ1nJyRyIe8zJANiwdGLom9sAAgysAMQPe8A2LCM092.jpg";
+        }
+        b = !b;
+        Uri uri = Uri.parse(avatar);
+        UserInfo userinfo = new UserInfo("9", "haha", uri);
+        RongIM.getInstance().refreshUserInfoCache(userinfo);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,25 +49,13 @@ public class ConversationListActivity extends BaseActivity {
                 .appendQueryParameter(Conversation.ConversationType.GROUP.getName(), "false")//群组
                 .appendQueryParameter(Conversation.ConversationType.PUBLIC_SERVICE.getName(), "false")//公共服务号
                 .appendQueryParameter(Conversation.ConversationType.APP_PUBLIC_SERVICE.getName(), "false")//订阅号
-                .appendQueryParameter(Conversation.ConversationType.SYSTEM.getName(), "true")//系统
+                .appendQueryParameter(Conversation.ConversationType.SYSTEM.getName(), "false")//系统
                 .appendQueryParameter(Conversation.ConversationType.DISCUSSION.getName(), "false")
                 .build();
-        fragment.setUri(uri); //设置 ConverssationListFragment 的显示属性
+        fragment.setUri(uri);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.container, fragment);
         transaction.commit();
-    }
-
-    @Override
-    public void finish() {
-        super.finish();
-        Log.d("会话列表", "finish");
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.d("会话列表", "onDestroy");
     }
 }

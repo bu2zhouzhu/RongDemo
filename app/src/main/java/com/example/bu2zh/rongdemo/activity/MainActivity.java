@@ -3,6 +3,7 @@ package com.example.bu2zh.rongdemo.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.example.bu2zh.rongdemo.R;
@@ -13,7 +14,9 @@ import com.example.bu2zh.rongdemo.sp.ConfigSp;
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.CSCustomServiceInfo;
+import io.rong.imlib.model.Conversation;
 
 public class MainActivity extends BaseActivity {
 
@@ -77,5 +80,17 @@ public class MainActivity extends BaseActivity {
 
         String id = new ConfigSp(this).getId();
         mMe.setText(getString(R.string.my_id, id));
+
+        RongIM.getInstance().getUnreadCount(Conversation.ConversationType.PRIVATE, "9", new RongIMClient.ResultCallback<Integer>() {
+            @Override
+            public void onSuccess(Integer integer) {
+                Log.d("mmm", "count: " + integer);
+            }
+
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+                Log.d("mmm", "error: " + errorCode.getMessage());
+            }
+        });
     }
 }
