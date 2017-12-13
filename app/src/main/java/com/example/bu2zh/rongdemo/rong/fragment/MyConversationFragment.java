@@ -20,7 +20,7 @@ public class MyConversationFragment extends ConversationFragment {
         super.onViewCreated(view, savedInstanceState);
 
         MessageContent content = InformationNotificationMessage.obtain(
-                "小灰条测试巴拉巴拉巴拉巴拉balabalabalabala"
+                "小灰条测试"
         );
         String targetId = getUri().getQueryParameter("targetId");
         String myId = new ConfigSp(getContext()).getId();

@@ -9,6 +9,7 @@ import com.example.bu2zh.rongdemo.rong.custom.message.CustomizeMessage;
 import com.example.bu2zh.rongdemo.rong.custom.message.CustomizeMessageItemProvider;
 import com.example.bu2zh.rongdemo.rong.custom.message.MyExtensionModule;
 import com.example.bu2zh.rongdemo.rong.custom.message.MyTextMessageItemProvider;
+import com.example.bu2zh.rongdemo.rong.custom.ui.conversationlist.MySystemConversationProvider;
 import com.example.bu2zh.rongdemo.rong.listener.MyConnectionStatusListener;
 import com.example.bu2zh.rongdemo.rong.listener.MyConversationBehaviorListener;
 import com.example.bu2zh.rongdemo.rong.listener.MyConversationListBehaviorListener;
@@ -22,6 +23,7 @@ import io.rong.imkit.IExtensionModule;
 import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.UserInfo;
+import io.rong.push.RongPushClient;
 
 /**
  * 融云SDK配置类
@@ -35,7 +37,7 @@ public class RongConfig {
         @Override
         public UserInfo getUserInfo(String s) {
             Uri uri = Uri.parse("http://rongcloud-web.qiniudn.com/docs_demo_rongcloud_logo.png");
-            UserInfo userinfo = new UserInfo(s, "test", uri);
+            UserInfo userinfo = new UserInfo(s, s, uri);
             // 刷新用户信息
             RongIM.getInstance().refreshUserInfoCache(userinfo);
             return userinfo;
@@ -59,10 +61,12 @@ public class RongConfig {
 
     private void config(Context context) {
 
+        RongPushClient.registerHWPush(context);
+
         RongIM.init(context);
 
         // 自定义会话列表
-//        RongIM.getInstance().registerConversationTemplate(new MyPrivateConversationProvider());
+        RongIM.getInstance().registerConversationTemplate(new MySystemConversationProvider());
 
         // 注册自定义消息
         RongIM.registerMessageType(CustomizeMessage.class);

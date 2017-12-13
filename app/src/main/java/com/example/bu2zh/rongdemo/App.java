@@ -1,6 +1,6 @@
 package com.example.bu2zh.rongdemo;
 
-import android.app.Application;
+import android.support.multidex.MultiDexApplication;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -11,7 +11,9 @@ import com.example.bu2zh.rongdemo.utils.MyToast;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 
-public class App extends Application {
+public class App extends MultiDexApplication {
+
+    private static final String TAG = "Apppp";
 
     @Override
     public void onCreate() {
@@ -22,7 +24,7 @@ public class App extends Application {
             connect(token);
         }
         MyToast.init(getApplicationContext());
-        Log.d("Apppp", "onCreate");
+        Log.d(TAG, "onCreate");
     }
 
     private void connect(String token) {
@@ -35,7 +37,7 @@ public class App extends Application {
 
             @Override
             public void onSuccess(String s) {
-
+                Log.d(TAG, "connect success: " + s);
             }
 
             @Override

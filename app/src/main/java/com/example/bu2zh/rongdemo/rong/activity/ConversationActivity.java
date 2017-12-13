@@ -18,9 +18,14 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationFragment;
 import io.rong.imkit.fragment.UriFragment;
+import io.rong.imlib.IRongCallback;
+import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.Message;
+import io.rong.message.TextMessage;
 
 /**
  * 配置会话界面
@@ -37,6 +42,33 @@ public class ConversationActivity extends BaseActivity {
     @OnClick(R.id.btn_left)
     void onBtnLeftClick() {
         finish();
+    }
+
+    @OnClick(R.id.text_right)
+    void onTextRightClick() {
+        TextMessage content = TextMessage.obtain("");
+        Message message = Message.obtain(mTargetId, mConversationType, content);
+        RongIM.getInstance().sendMessage(
+                message,
+                "pushContent",
+                "pushData",
+                new IRongCallback.ISendMessageCallback() {
+                    @Override
+                    public void onAttached(Message message) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(Message message) {
+
+                    }
+
+                    @Override
+                    public void onError(Message message, RongIMClient.ErrorCode errorCode) {
+
+                    }
+                }
+        );
     }
 
     @OnClick(R.id.btn_right)

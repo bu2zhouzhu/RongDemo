@@ -47,7 +47,6 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="15dp"
             android:background="@null"
-            android:onClick="onHeadRightButtonClick"
             android:maxLines="1"
             android:textColor="@drawable/selector_btn_top" />
 
@@ -59,10 +58,11 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="15dp"
             android:clickable="true"
+            android:text="test"
             android:maxLines="1"
             android:textColor="#fff"
             android:textSize="18sp"
-            android:visibility="gone" />
+            android:visibility="visible" />
     </LinearLayout>
 
     <fragment
