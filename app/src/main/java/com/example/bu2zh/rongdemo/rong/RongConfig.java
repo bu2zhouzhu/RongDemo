@@ -22,6 +22,7 @@ import io.rong.imkit.DefaultExtensionModule;
 import io.rong.imkit.IExtensionModule;
 import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
+import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.UserInfo;
 import io.rong.push.RongPushClient;
 
@@ -80,6 +81,7 @@ public class RongConfig {
         RongIM.getInstance().enableNewComingMessageIcon(true); //显示新消息提醒
         RongIM.getInstance().enableUnreadMessageIcon(true); //显示未读消息数目
 
+        enableReadReceipt();
     }
 
     private void initListener() {
@@ -100,6 +102,15 @@ public class RongConfig {
 
         // 设置用户信息提供者
         RongIM.setUserInfoProvider(mUserInfoProvider, true);
+    }
+
+    private void enableReadReceipt() {
+        Conversation.ConversationType[] types = new Conversation.ConversationType[] {
+                Conversation.ConversationType.PRIVATE,
+                Conversation.ConversationType.GROUP,
+                Conversation.ConversationType.DISCUSSION
+        };
+        RongIM.getInstance().setReadReceiptConversationTypeList(types);
     }
 
     private static String getCurProcessName(Context context) {

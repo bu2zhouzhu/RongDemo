@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.example.bu2zh.rongdemo.BuildConfig;
 import com.example.bu2zh.rongdemo.R;
 import com.example.bu2zh.rongdemo.base.BaseActivity;
 import com.example.bu2zh.rongdemo.rong.activity.ConversationListActivity;
@@ -20,6 +21,8 @@ import io.rong.imlib.model.Conversation;
 
 public class MainActivity extends BaseActivity {
 
+    @BindView(R.id.package_name)
+    TextView mPackageName;
     @BindView(R.id.me)
     TextView mMe;
 
@@ -73,11 +76,17 @@ public class MainActivity extends BaseActivity {
         startActivity(new Intent(this, GroupActivity.class));
     }
 
+    @OnClick(R.id.chatroom)
+    void onChatroomClick() {
+        startActivity(new Intent(this, ChatRoomActivity.class));
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mPackageName.setText(BuildConfig.APPLICATION_ID);
         String id = new ConfigSp(this).getId();
         mMe.setText(getString(R.string.my_id, id));
 
@@ -92,5 +101,11 @@ public class MainActivity extends BaseActivity {
                 Log.d("mmm", "error: " + errorCode.getMessage());
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        RongIM.getInstance().disconnect();
     }
 }

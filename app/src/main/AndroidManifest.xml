@@ -95,6 +95,7 @@
                     android:scheme="rong" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.ChatRoomActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

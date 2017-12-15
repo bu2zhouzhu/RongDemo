@@ -20,10 +20,17 @@ public class SplashActivity extends Activity {
         String token = new ConfigSp(this).getToken();
         if (TextUtils.isEmpty(token)) {
             startActivity(new Intent(this, LoginActivity.class));
+            finish();
         } else {
-            toMainActivity();
+            RongIMClient.ConnectionStatusListener.ConnectionStatus status =
+                    RongIM.getInstance().getCurrentConnectionStatus();
+            if (status == RongIMClient.ConnectionStatusListener.ConnectionStatus.DISCONNECTED) {
+                connect(token);
+            } else {
+                toMainActivity();
+                finish();
+            }
         }
-        finish();
     }
 
     private void connect(String token) {
