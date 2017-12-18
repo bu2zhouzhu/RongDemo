@@ -4,20 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.GridView;
 
 import com.example.bu2zh.rongdemo.R;
-
-import java.lang.reflect.Field;
-import java.util.List;
 
 import io.rong.imkit.RongExtension;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.plugin.IPluginModule;
-import io.rong.imkit.plugin.PluginAdapter;
 import io.rong.imlib.IRongCallback;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
@@ -56,33 +48,10 @@ public class MyPlugin implements IPluginModule {
 
     @Override
     public void onClick(Fragment fragment, RongExtension rongExtension) {
-        ViewGroup vg = (ViewGroup) rongExtension.getChildAt(1);
-        vg = (ViewGroup) vg.getChildAt(0);
-        vg = (ViewPager) vg.getChildAt(0);
-        GridView gridView = (GridView) vg.getChildAt(0);
-        BaseAdapter adapter = (BaseAdapter) gridView.getAdapter();
-
-        try {
-            Field f = RongExtension.class.getDeclaredField("mPluginAdapter");
-            f.setAccessible(true);
-            PluginAdapter pluginAdapter = (PluginAdapter) f.get(rongExtension);
-            f = pluginAdapter.getClass().getDeclaredField("mPluginModules");
-            f.setAccessible(true);
-            List<IPluginModule> pluginModules = (List<IPluginModule>) f.get(pluginAdapter);
-            pluginModules.remove(pluginModules.size() - 1);
-            f = adapter.getClass().getDeclaredField("count");
-            f.setAccessible(true);
-            f.set(adapter, pluginModules.size());
-            adapter.notifyDataSetChanged();
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-
+        Conversation.ConversationType conversationType = rongExtension.getConversationType();
         CustomizeMessage content = new CustomizeMessage("CustomMessage");
         String targetId = rongExtension.getTargetId();
-        Message message = Message.obtain(targetId, Conversation.ConversationType.PRIVATE, content);
+        Message message = Message.obtain(targetId, conversationType, content);
         RongIM.getInstance().sendMessage(message, null, null, callback);
     }
 

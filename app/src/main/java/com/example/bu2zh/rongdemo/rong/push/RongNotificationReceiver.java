@@ -19,6 +19,7 @@ public class RongNotificationReceiver extends PushMessageReceiver {
 
     @Override
     public boolean onNotificationMessageClicked(Context context, PushNotificationMessage pushNotificationMessage) {
+        Log.d("Rong-Push", "点击通知栏");
         return false;
     }
 }

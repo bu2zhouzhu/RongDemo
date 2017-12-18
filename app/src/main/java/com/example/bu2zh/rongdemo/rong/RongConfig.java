@@ -10,7 +10,6 @@ import com.example.bu2zh.rongdemo.rong.custom.message.CustomizeMessageItemProvid
 import com.example.bu2zh.rongdemo.rong.custom.message.MyExtensionModule;
 import com.example.bu2zh.rongdemo.rong.custom.message.MyTextMessageItemProvider;
 import com.example.bu2zh.rongdemo.rong.custom.ui.conversationlist.MySystemConversationProvider;
-import com.example.bu2zh.rongdemo.rong.listener.MyConnectionStatusListener;
 import com.example.bu2zh.rongdemo.rong.listener.MyConversationBehaviorListener;
 import com.example.bu2zh.rongdemo.rong.listener.MyConversationListBehaviorListener;
 import com.example.bu2zh.rongdemo.rong.listener.MyReceiveMessageListener;
@@ -92,7 +91,7 @@ public class RongConfig {
         RongIM.setOnReceiveMessageListener(new MyReceiveMessageListener());
 
         // 连接状态监听器
-        RongIM.setConnectionStatusListener(new MyConnectionStatusListener());
+//        RongIM.setConnectionStatusListener(new MyConnectionStatusListener());
 
         // 会话列表操作监听器
         RongIM.setConversationListBehaviorListener(new MyConversationListBehaviorListener());

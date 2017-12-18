@@ -11,6 +11,7 @@ import com.example.bu2zh.rongdemo.R;
 import com.example.bu2zh.rongdemo.base.BaseActivity;
 import com.example.bu2zh.rongdemo.rong.activity.ConversationListActivity;
 import com.example.bu2zh.rongdemo.sp.ConfigSp;
+import com.example.bu2zh.rongdemo.utils.MyToast;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -59,11 +60,7 @@ public class MainActivity extends BaseActivity {
 
     @OnClick(R.id.logout)
     void onLogoutClick() {
-        // 断开连接
-        RongIM.getInstance().logout();
-        new ConfigSp(this).clear();
-        startActivity(new Intent(this, LoginActivity.class));
-        finish();
+        logout();
     }
 
     @OnClick(R.id.send_message)
@@ -101,11 +98,32 @@ public class MainActivity extends BaseActivity {
                 Log.d("mmm", "error: " + errorCode.getMessage());
             }
         });
+
+        RongIM.setConnectionStatusListener(new RongIMClient.ConnectionStatusListener() {
+            @Override
+            public void onChanged(ConnectionStatus connectionStatus) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        MyToast.show("您的账号在另外一台设备上登录");
+                        logout();
+                    }
+                });
+            }
+        });
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        RongIM.getInstance().disconnect();
+        RongIM.setConnectionStatusListener(null);
+//        RongIM.getInstance().disconnect();
+    }
+
+    private void logout() {
+        RongIM.getInstance().logout();
+        new ConfigSp(this).clear();
+        startActivity(new Intent(this, LoginActivity.class));
+        finish();
     }
 }
