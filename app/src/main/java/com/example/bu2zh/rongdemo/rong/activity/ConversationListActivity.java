@@ -1,5 +1,6 @@
 package com.example.bu2zh.rongdemo.rong.activity;
 
+import android.content.ContentResolver;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -36,7 +37,11 @@ public class ConversationListActivity extends BaseActivity {
     void onClick() {
         String avatar;
         if (b) {
-            avatar = "http://rongcloud-web.qiniudn.com/docs_demo_rongcloud_logo.png";
+            int drawableId = R.drawable.test1;
+            avatar = ContentResolver.SCHEME_ANDROID_RESOURCE +
+                    "://" + getResources().getResourcePackageName(drawableId)
+                    + '/' + getResources().getResourceTypeName(drawableId)
+                    + '/' + getResources().getResourceEntryName(drawableId);
         } else {
             avatar = "http://desk.fd.zol-img.com.cn/t_s720x360c5/g5/M00/0D/0F/ChMkJ1nJyRyIe8zJANiwdGLom9sAAgysAMQPe8A2LCM092.jpg";
         }
@@ -51,11 +56,11 @@ public class ConversationListActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conversationlist);
 
-        ConversationListFragment fragment = new ConversationListFragment();
+        ConversationListFragment fragment = new MyConversationListFragment();
 
         Uri uri = Uri.parse("rong://" + getApplicationInfo().packageName).buildUpon()
                 .appendPath("conversationlist")
-                .appendQueryParameter(Conversation.ConversationType.PRIVATE.getName(), "true") //设置私聊会话是否聚合显示
+                .appendQueryParameter(Conversation.ConversationType.PRIVATE.getName(), "false") //设置私聊会话是否聚合显示
                 .appendQueryParameter(Conversation.ConversationType.GROUP.getName(), "false")//群组
                 .appendQueryParameter(Conversation.ConversationType.PUBLIC_SERVICE.getName(), "false")//公共服务号
                 .appendQueryParameter(Conversation.ConversationType.APP_PUBLIC_SERVICE.getName(), "false")//订阅号
