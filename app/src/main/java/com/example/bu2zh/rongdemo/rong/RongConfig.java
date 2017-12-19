@@ -22,6 +22,7 @@ import io.rong.imkit.DefaultExtensionModule;
 import io.rong.imkit.IExtensionModule;
 import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
+import io.rong.imkit.model.GroupUserInfo;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.UserInfo;
 import io.rong.push.RongPushClient;
@@ -56,6 +57,15 @@ public class RongConfig {
                 userInfoList.add(userinfo);
             }
             iGroupMemberCallback.onGetGroupMembersResult(userInfoList);
+        }
+    };
+
+    private RongIM.GroupUserInfoProvider mGroupUserInfoProvider = new RongIM.GroupUserInfoProvider() {
+        @Override
+        public GroupUserInfo getGroupUserInfo(String groupId, String userId) {
+            GroupUserInfo groupUserInfo = new GroupUserInfo(groupId, userId, userId);
+            RongIM.getInstance().refreshGroupUserInfoCache(groupUserInfo);
+            return groupUserInfo;
         }
     };
 
@@ -117,9 +127,9 @@ public class RongConfig {
     }
 
     private void initProvider() {
-        // 设置用户信息提供者
         RongIM.setUserInfoProvider(mUserInfoProvider, true);
         RongIM.getInstance().setGroupMembersProvider(mGroupMembersProvider);
+        RongIM.setGroupUserInfoProvider(mGroupUserInfoProvider, true);
     }
 
     private void enableReadReceipt() {

@@ -9,3 +9,8 @@
 .externalNativeBuild
 keystore.properties
 app/release
+IMLib/build
+IMKit/build
+CallLib/build
+CallKit/build
+RedPacket/build

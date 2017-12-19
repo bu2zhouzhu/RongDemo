@@ -21,11 +21,8 @@ import butterknife.OnClick;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationFragment;
 import io.rong.imkit.fragment.UriFragment;
-import io.rong.imlib.IRongCallback;
-import io.rong.imlib.RongIMClient;
+import io.rong.imkit.model.GroupUserInfo;
 import io.rong.imlib.model.Conversation;
-import io.rong.imlib.model.Message;
-import io.rong.message.TextMessage;
 
 /**
  * 配置会话界面
@@ -35,6 +32,8 @@ public class ConversationActivity extends BaseActivity {
 
     private String mTargetId;
     private Conversation.ConversationType mConversationType;
+    private String[] nicks = {"nick1", "nick2", "nick3"};
+    private int nickIndex;
 
     @BindView(R.id.btn_right)
     Button mRightButton;
@@ -45,30 +44,10 @@ public class ConversationActivity extends BaseActivity {
     }
 
     @OnClick(R.id.text_right)
-    void onTextRightClick() {
-        TextMessage content = TextMessage.obtain("");
-        Message message = Message.obtain(mTargetId, mConversationType, content);
-        RongIM.getInstance().sendMessage(
-                message,
-                "pushContent",
-                "pushData",
-                new IRongCallback.ISendMessageCallback() {
-                    @Override
-                    public void onAttached(Message message) {
-
-                    }
-
-                    @Override
-                    public void onSuccess(Message message) {
-
-                    }
-
-                    @Override
-                    public void onError(Message message, RongIMClient.ErrorCode errorCode) {
-
-                    }
-                }
-        );
+    void onTestClick() {
+        GroupUserInfo groupUserInfo = new GroupUserInfo("1", "23", "23" + nicks[nickIndex]);
+        nickIndex = (nickIndex + 1) % nicks.length;
+        RongIM.getInstance().refreshGroupUserInfoCache(groupUserInfo);
     }
 
     @OnClick(R.id.btn_right)
