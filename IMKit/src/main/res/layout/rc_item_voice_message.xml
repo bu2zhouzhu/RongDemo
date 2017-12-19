@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|right"
-            android:layout_marginRight="0dp"
+            android:layout_marginRight="6dp"
             android:textStyle="bold"
             android:textColor="@color/rc_voice_color_right"
             android:textSize="14sp" />
