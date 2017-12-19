@@ -15,6 +15,7 @@ import com.example.bu2zh.rongdemo.rong.listener.MyConversationListBehaviorListen
 import com.example.bu2zh.rongdemo.rong.listener.MyReceiveMessageListener;
 import com.example.bu2zh.rongdemo.rong.listener.MySendMessageListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.rong.imkit.DefaultExtensionModule;
@@ -41,6 +42,20 @@ public class RongConfig {
             // 刷新用户信息
             RongIM.getInstance().refreshUserInfoCache(userinfo);
             return userinfo;
+        }
+    };
+
+    private RongIM.IGroupMembersProvider mGroupMembersProvider = new RongIM.IGroupMembersProvider() {
+        @Override
+        public void getGroupMembers(String groupId, RongIM.IGroupMemberCallback iGroupMemberCallback) {
+            List<UserInfo> userInfoList = new ArrayList<>();
+            Uri uri = Uri.parse("http://rongcloud-web.qiniudn.com/docs_demo_rongcloud_logo.png");
+            for (int i = 0; i < 100; i++) {
+                String s = String.valueOf(i);
+                UserInfo userinfo = new UserInfo(s, s, uri);
+                userInfoList.add(userinfo);
+            }
+            iGroupMemberCallback.onGetGroupMembersResult(userInfoList);
         }
     };
 
@@ -76,6 +91,7 @@ public class RongConfig {
 
         // 注册监听器
         initListener();
+        initProvider();
 
         RongIM.getInstance().enableNewComingMessageIcon(true); //显示新消息提醒
         RongIM.getInstance().enableUnreadMessageIcon(true); //显示未读消息数目
@@ -98,9 +114,12 @@ public class RongConfig {
 
         // 会话界面操作监听器
         RongIM.setConversationBehaviorListener(new MyConversationBehaviorListener());
+    }
 
+    private void initProvider() {
         // 设置用户信息提供者
         RongIM.setUserInfoProvider(mUserInfoProvider, true);
+        RongIM.getInstance().setGroupMembersProvider(mGroupMembersProvider);
     }
 
     private void enableReadReceipt() {
