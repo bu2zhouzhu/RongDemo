@@ -1,4 +1,4 @@
-package com.example.bu2zh.rongdemo.utils;
+package com.example.network;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;

@@ -20,7 +20,6 @@ public interface RongApi {
     @POST("user/getToken.json")
     @FormUrlEncoded
     Single<TokenResponse> getToken(
-            @HeaderMap Map<String, String> headers,
             @Field("userId") String userId,
             @Field("name") String userName,
             @Field("portraitUri") String portraitUri
@@ -38,7 +37,6 @@ public interface RongApi {
     @POST("group/join.json")
     @FormUrlEncoded
     Single<SimpleResponse> joinGroup(
-            @HeaderMap Map<String, String> headers,
             @Field("userId") String userId,
             @Field("groupId") String groupId,
             @Field("groupName") String groupName

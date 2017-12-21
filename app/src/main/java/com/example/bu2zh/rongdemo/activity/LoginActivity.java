@@ -10,15 +10,9 @@ import android.widget.Toast;
 import com.example.bu2zh.model.TokenResponse;
 import com.example.bu2zh.rongdemo.R;
 import com.example.bu2zh.rongdemo.sp.ConfigSp;
-import com.example.bu2zh.rongdemo.utils.Constants;
 import com.example.bu2zh.rongdemo.utils.MyToast;
-import com.example.bu2zh.rongdemo.utils.SHA1Tool;
 import com.example.network.ApiService;
 import com.example.network.RongApi;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -54,18 +48,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void getToken(final String userId, String userName, String portrait) {
-        final String nonce = Integer.toString(new Random().nextInt(1000));
-        final String timeStamp = Long.toString(System.currentTimeMillis());
-        final String signature = SHA1Tool.SHA1(Constants.APP_SECRET + nonce + timeStamp);
-
         RongApi api = ApiService.getInstance().create(RongApi.class);
-        Map<String, String> headers = new HashMap<>();
-        headers.put("App-Key", Constants.APP_KEY);
-        headers.put("Nonce", nonce);
-        headers.put("Timestamp", timeStamp);
-        headers.put("Signature", signature);
-
-        api.getToken(headers, userId, userName, portrait)
+        api.getToken(userId, userName, portrait)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
