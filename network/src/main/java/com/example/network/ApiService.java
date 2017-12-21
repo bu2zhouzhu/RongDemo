@@ -14,6 +14,7 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -29,7 +30,9 @@ public class ApiService {
 
     private ApiService() {
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-        Interceptor interceptor = new Interceptor() {
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.HEADERS);
+        Interceptor headers = new Interceptor() {
             @Override
             public Response intercept(@NonNull Chain chain) throws IOException {
                 String nonce = Integer.toString(new Random().nextInt(1000));
@@ -44,7 +47,8 @@ public class ApiService {
                 return chain.proceed(request);
             }
         };
-        httpClient.addInterceptor(interceptor);
+        httpClient.addInterceptor(logging);
+        httpClient.addInterceptor(headers);
         Gson gson = new GsonBuilder()
                 .registerTypeAdapterFactory(AutoValueGsonFactory.create())
                 .create();
