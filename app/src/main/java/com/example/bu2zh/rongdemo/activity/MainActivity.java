@@ -110,13 +110,15 @@ public class MainActivity extends BaseActivity {
         RongIM.setConnectionStatusListener(new RongIMClient.ConnectionStatusListener() {
             @Override
             public void onChanged(ConnectionStatus connectionStatus) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        MyToast.show("您的账号在另外一台设备上登录");
-                        logout();
-                    }
-                });
+                if (connectionStatus == ConnectionStatus.KICKED_OFFLINE_BY_OTHER_CLIENT) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            MyToast.show("您的账号在另外一台设备上登录");
+                            logout();
+                        }
+                    });
+                }
             }
         });
     }
