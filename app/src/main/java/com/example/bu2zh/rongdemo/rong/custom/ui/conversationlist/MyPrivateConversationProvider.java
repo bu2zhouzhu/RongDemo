@@ -14,7 +14,7 @@ public class MyPrivateConversationProvider extends PrivateConversationProvider {
     public void bindView(View view, int position, UIConversation data) {
         super.bindView(view, position, data);
         ViewHolder holder = (ViewHolder) view.getTag();
-        holder.title.setTextColor(Color.RED);
+        holder.content.setTextColor(Color.RED);
     }
 
 }

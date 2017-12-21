@@ -3,6 +3,7 @@ package com.example.bu2zh.rongdemo.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.example.bu2zh.rongdemo.BuildConfig;
@@ -12,11 +13,14 @@ import com.example.bu2zh.rongdemo.rong.activity.ConversationListActivity;
 import com.example.bu2zh.rongdemo.sp.ConfigSp;
 import com.example.bu2zh.rongdemo.utils.MyToast;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.CSCustomServiceInfo;
+import io.rong.imlib.model.Conversation;
 
 public class MainActivity extends BaseActivity {
 
@@ -74,6 +78,24 @@ public class MainActivity extends BaseActivity {
     @OnClick(R.id.chatroom)
     void onChatroomClick() {
         startActivity(new Intent(this, ChatRoomActivity.class));
+    }
+
+    @OnClick(R.id.test)
+    void onTestClick() {
+        RongIMClient.getInstance().getConversationList(new RongIMClient.ResultCallback<List<Conversation>>() {
+            @Override
+            public void onSuccess(List<Conversation> conversations) {
+                Log.d("ccccc", "conversations size1: " + conversations.size());
+            }
+
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+
+            }
+        });
+
+        List<Conversation> conversations = RongIMClient.getInstance().getConversationList();
+        Log.d("ccccc", "conversations size2: " + conversations.size());
     }
 
     @Override

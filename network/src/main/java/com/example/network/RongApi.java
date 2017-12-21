@@ -35,4 +35,13 @@ public interface RongApi {
             @Field("portraitUri") String portraitUri
     );
 
+    @POST("group/join.json")
+    @FormUrlEncoded
+    Single<SimpleResponse> joinGroup(
+            @HeaderMap Map<String, String> headers,
+            @Field("userId") String userId,
+            @Field("groupId") String groupId,
+            @Field("groupName") String groupName
+    );
+
 }

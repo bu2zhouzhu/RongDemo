@@ -9,6 +9,7 @@ import com.example.bu2zh.rongdemo.rong.custom.message.CustomizeMessage;
 import com.example.bu2zh.rongdemo.rong.custom.message.CustomizeMessageItemProvider;
 import com.example.bu2zh.rongdemo.rong.custom.message.MyExtensionModule;
 import com.example.bu2zh.rongdemo.rong.custom.message.MyTextMessageItemProvider;
+import com.example.bu2zh.rongdemo.rong.custom.ui.conversationlist.MyPrivateConversationProvider;
 import com.example.bu2zh.rongdemo.rong.custom.ui.conversationlist.MySystemConversationProvider;
 import com.example.bu2zh.rongdemo.rong.listener.MyConversationBehaviorListener;
 import com.example.bu2zh.rongdemo.rong.listener.MyConversationListBehaviorListener;
@@ -24,6 +25,7 @@ import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.model.GroupUserInfo;
 import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.Group;
 import io.rong.imlib.model.UserInfo;
 import io.rong.push.RongPushClient;
 
@@ -69,6 +71,13 @@ public class RongConfig {
         }
     };
 
+    private RongIM.GroupInfoProvider mGroupInfoProvider = new RongIM.GroupInfoProvider() {
+        @Override
+        public Group getGroupInfo(String s) {
+            return new Group(s, s, null);
+        }
+    };
+
     private RongConfig() {
     }
 
@@ -86,22 +95,27 @@ public class RongConfig {
 
     private void config(Context context) {
 
-        RongPushClient.registerHWPush(context);
+        RongPushClient.registerHWPush(context); // 华为推送
 
         RongIM.init(context);
 
-        // 自定义会话列表
+        // 会话提供者
         RongIM.getInstance().registerConversationTemplate(new MySystemConversationProvider());
+        RongIM.getInstance().registerConversationTemplate(new MyPrivateConversationProvider());
 
-        // 注册自定义消息
+        // 注册新的消息类型
         RongIM.registerMessageType(CustomizeMessage.class);
+
+        // 消息提供者
         RongIM.registerMessageTemplate(new CustomizeMessageItemProvider());
         RongIM.registerMessageTemplate(new MyTextMessageItemProvider());
-        setMyExtensionModule();
 
-        // 注册监听器
-        initListener();
-        initProvider();
+
+        setMyExtensionModule(); // 设置 RongExtension
+
+        initListener(); // 注册监听器
+
+        initProvider(); // 设置各种信息提供者
 
         RongIM.getInstance().enableNewComingMessageIcon(true); //显示新消息提醒
         RongIM.getInstance().enableUnreadMessageIcon(true); //显示未读消息数目
@@ -127,13 +141,18 @@ public class RongConfig {
     }
 
     private void initProvider() {
+        // 用户信息提供者
         RongIM.setUserInfoProvider(mUserInfoProvider, true);
+        // @ 成员信息提供者
         RongIM.getInstance().setGroupMembersProvider(mGroupMembersProvider);
+        // 群组用户昵称提供者
         RongIM.setGroupUserInfoProvider(mGroupUserInfoProvider, true);
+        // 群信息提供者
+        RongIM.setGroupInfoProvider(mGroupInfoProvider, true);
     }
 
     private void enableReadReceipt() {
-        Conversation.ConversationType[] types = new Conversation.ConversationType[] {
+        Conversation.ConversationType[] types = new Conversation.ConversationType[]{
                 Conversation.ConversationType.PRIVATE,
                 Conversation.ConversationType.GROUP,
                 Conversation.ConversationType.DISCUSSION
