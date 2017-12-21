@@ -3,6 +3,7 @@ package com.example.bu2zh.rongdemo.rong;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.net.Uri;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.example.bu2zh.rongdemo.rong.custom.message.CustomizeMessage;
@@ -15,6 +16,7 @@ import com.example.bu2zh.rongdemo.rong.listener.MyConversationBehaviorListener;
 import com.example.bu2zh.rongdemo.rong.listener.MyConversationListBehaviorListener;
 import com.example.bu2zh.rongdemo.rong.listener.MyReceiveMessageListener;
 import com.example.bu2zh.rongdemo.rong.listener.MySendMessageListener;
+import com.example.bu2zh.rongdemo.sp.ConfigSp;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +26,7 @@ import io.rong.imkit.IExtensionModule;
 import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.model.GroupUserInfo;
+import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Group;
 import io.rong.imlib.model.UserInfo;
@@ -121,6 +124,8 @@ public class RongConfig {
         RongIM.getInstance().enableUnreadMessageIcon(true); //显示未读消息数目
 
         enableReadReceipt();
+
+        connect(context);
     }
 
     private void initListener() {
@@ -186,6 +191,28 @@ public class RongConfig {
                 RongExtensionManager.getInstance().unregisterExtensionModule(defaultModule);
                 RongExtensionManager.getInstance().registerExtensionModule(new MyExtensionModule());
             }
+        }
+    }
+
+    private void connect(Context context) {
+        String token = new ConfigSp(context).getToken();
+        if (!TextUtils.isEmpty(token)) {
+            RongIM.connect(token, new RongIMClient.ConnectCallback() {
+                @Override
+                public void onTokenIncorrect() {
+                    Log.d(TAG, "onTokenIncorrect");
+                }
+
+                @Override
+                public void onSuccess(String s) {
+                    Log.d(TAG, "connect success: " + s);
+                }
+
+                @Override
+                public void onError(RongIMClient.ErrorCode errorCode) {
+
+                }
+            });
         }
     }
 }
