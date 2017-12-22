@@ -61,6 +61,7 @@ public class RongConfig {
                 UserInfo userinfo = new UserInfo(s, s, uri);
                 userInfoList.add(userinfo);
             }
+            userInfoList.add(new UserInfo("all", "所有人", null));
             iGroupMemberCallback.onGetGroupMembersResult(userInfoList);
         }
     };
@@ -116,7 +117,7 @@ public class RongConfig {
 
         setMyExtensionModule(); // 设置 RongExtension
 
-        initListener(); // 注册监听器
+        initListener(context); // 注册监听器
 
         initProvider(); // 设置各种信息提供者
 
@@ -128,12 +129,12 @@ public class RongConfig {
         connect(context);
     }
 
-    private void initListener() {
+    private void initListener(Context context) {
         // 发送消息监听器
-        RongIM.getInstance().setSendMessageListener(new MySendMessageListener());
+        RongIM.getInstance().setSendMessageListener(new MySendMessageListener(context));
 
         // 接收消息监听器
-        RongIM.setOnReceiveMessageListener(new MyReceiveMessageListener());
+        RongIM.setOnReceiveMessageListener(new MyReceiveMessageListener(context));
 
         // 连接状态监听器
 //        RongIM.setConnectionStatusListener(new MyConnectionStatusListener());

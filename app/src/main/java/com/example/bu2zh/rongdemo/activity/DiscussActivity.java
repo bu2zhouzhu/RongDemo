@@ -15,7 +15,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.rong.imkit.RongIM;
-import io.rong.imlib.RongIMClient;
 
 public class DiscussActivity extends BaseActivity {
 
@@ -39,19 +38,7 @@ public class DiscussActivity extends BaseActivity {
         String[] ids = idString.split(",");
         List<String> userIdList = Arrays.asList(ids);
         // 创建讨论组
-        RongIM.getInstance().createDiscussion(name, userIdList, new RongIMClient.CreateDiscussionCallback() {
-            @Override
-            public void onSuccess(String s) {
-                MyToast.show("创建讨论组成功");
-                // 打开讨论组聊天窗口
-                RongIM.getInstance().startDiscussionChat(DiscussActivity.this, s, name);
-            }
-
-            @Override
-            public void onError(RongIMClient.ErrorCode errorCode) {
-                MyToast.show("创建讨论组失败");
-            }
-        });
+        RongIM.getInstance().createDiscussionChat(this, userIdList, name);
     }
 
     @Override

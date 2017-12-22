@@ -1,6 +1,5 @@
 package com.example.bu2zh.rongdemo.rong.activity;
 
-import android.content.ContentResolver;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,13 +8,15 @@ import android.util.Log;
 
 import com.example.bu2zh.rongdemo.R;
 import com.example.bu2zh.rongdemo.base.BaseActivity;
+import com.example.bu2zh.rongdemo.sp.MessageSp;
 
 import butterknife.OnClick;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
 import io.rong.imkit.manager.IUnReadMessageObserver;
+import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
-import io.rong.imlib.model.UserInfo;
+import io.rong.imlib.model.Message;
 
 /**
  * 配置会话列表
@@ -24,7 +25,7 @@ import io.rong.imlib.model.UserInfo;
 public class ConversationListActivity extends BaseActivity {
 
     private static final String TAG = "会话列表界面";
-    private boolean b;
+    private ConversationListFragment fragment;
 
     private IUnReadMessageObserver mObserver = new IUnReadMessageObserver() {
         @Override
@@ -35,20 +36,18 @@ public class ConversationListActivity extends BaseActivity {
 
     @OnClick(R.id.btn)
     void onClick() {
-        String avatar;
-        if (b) {
-            int drawableId = R.drawable.test1;
-            avatar = ContentResolver.SCHEME_ANDROID_RESOURCE +
-                    "://" + getResources().getResourcePackageName(drawableId)
-                    + '/' + getResources().getResourceTypeName(drawableId)
-                    + '/' + getResources().getResourceEntryName(drawableId);
-        } else {
-            avatar = "http://desk.fd.zol-img.com.cn/t_s720x360c5/g5/M00/0D/0F/ChMkJ1nJyRyIe8zJANiwdGLom9sAAgysAMQPe8A2LCM092.jpg";
-        }
-        b = !b;
-        Uri uri = Uri.parse(avatar);
-        UserInfo userinfo = new UserInfo("9", "haha", uri);
-        RongIM.getInstance().refreshUserInfoCache(userinfo);
+        int messageId = new MessageSp(this).getId();
+        RongIM.getInstance().setMessageReceivedStatus(messageId, new Message.ReceivedStatus(1), new RongIMClient.ResultCallback<Boolean>() {
+            @Override
+            public void onSuccess(Boolean aBoolean) {
+                fragment.onRestoreUI();
+            }
+
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+
+            }
+        });
     }
 
     @Override
@@ -56,7 +55,7 @@ public class ConversationListActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conversationlist);
 
-        ConversationListFragment fragment = new MyConversationListFragment();
+        fragment = new MyConversationListFragment();
 
         Uri uri = Uri.parse("rong://" + getApplicationInfo().packageName).buildUpon()
                 .appendPath("conversationlist")

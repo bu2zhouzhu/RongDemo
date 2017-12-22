@@ -14,6 +14,7 @@ import com.example.bu2zh.rongdemo.R;
 import com.example.bu2zh.rongdemo.activity.GroupDetailActivity;
 import com.example.bu2zh.rongdemo.base.BaseActivity;
 
+import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -21,8 +22,11 @@ import butterknife.OnClick;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationFragment;
 import io.rong.imkit.fragment.UriFragment;
-import io.rong.imkit.model.GroupUserInfo;
+import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.Message;
+import io.rong.message.ImageMessage;
+import io.rong.message.TextMessage;
 
 /**
  * 配置会话界面
@@ -45,9 +49,22 @@ public class ConversationActivity extends BaseActivity {
 
     @OnClick(R.id.text_right)
     void onTestClick() {
-        GroupUserInfo groupUserInfo = new GroupUserInfo("1", "23", "23" + nicks[nickIndex]);
-        nickIndex = (nickIndex + 1) % nicks.length;
-        RongIM.getInstance().refreshGroupUserInfoCache(groupUserInfo);
+        RongIM.getInstance().getLatestMessages(mConversationType, mTargetId, 1, new RongIMClient.ResultCallback<List<Message>>() {
+            @Override
+            public void onSuccess(List<Message> messages) {
+                Message message = messages.get(0);
+                if (message.getContent() instanceof TextMessage) {
+                    Log.d("cc", "文本消息");
+                } else if (message.getContent() instanceof ImageMessage) {
+                    Log.d("cc", "图片消息");
+                }
+            }
+
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+                Log.d("cccc", "onError");
+            }
+        });
     }
 
     @OnClick(R.id.btn_right)
@@ -80,6 +97,13 @@ public class ConversationActivity extends BaseActivity {
             mTargetId = uri.getQueryParameter("targetId");
             mConversationType = Conversation.ConversationType.valueOf(uri
                     .getLastPathSegment().toUpperCase(Locale.US));
+
+            if (mConversationType.equals(Conversation.ConversationType.SYSTEM)) {
+                RongIM.getInstance().clearMessagesUnreadStatus(mConversationType, mTargetId, null);
+                startActivity(new Intent(this, TestPushActivity.class));
+                finish();
+                return;
+            }
 
             if (mConversationType.equals(Conversation.ConversationType.GROUP)) {
                 mRightButton.setBackground(getResources().getDrawable(R.drawable.icon2_menu));
