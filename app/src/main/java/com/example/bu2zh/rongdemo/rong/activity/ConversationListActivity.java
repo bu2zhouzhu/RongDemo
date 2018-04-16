@@ -1,6 +1,5 @@
 package com.example.bu2zh.rongdemo.rong.activity;
 
-import android.content.ContentResolver;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,8 +13,10 @@ import butterknife.OnClick;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
 import io.rong.imkit.manager.IUnReadMessageObserver;
+import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
-import io.rong.imlib.model.UserInfo;
+import io.rong.imlib.model.Message;
+import io.rong.message.TextMessage;
 
 /**
  * 配置会话列表
@@ -33,22 +34,26 @@ public class ConversationListActivity extends BaseActivity {
         }
     };
 
-    @OnClick(R.id.btn)
-    void onClick() {
-        String avatar;
-        if (b) {
-            int drawableId = R.drawable.test1;
-            avatar = ContentResolver.SCHEME_ANDROID_RESOURCE +
-                    "://" + getResources().getResourcePackageName(drawableId)
-                    + '/' + getResources().getResourceTypeName(drawableId)
-                    + '/' + getResources().getResourceEntryName(drawableId);
-        } else {
-            avatar = "http://desk.fd.zol-img.com.cn/t_s720x360c5/g5/M00/0D/0F/ChMkJ1nJyRyIe8zJANiwdGLom9sAAgysAMQPe8A2LCM092.jpg";
-        }
-        b = !b;
-        Uri uri = Uri.parse(avatar);
-        UserInfo userinfo = new UserInfo("9", "haha", uri);
-        RongIM.getInstance().refreshUserInfoCache(userinfo);
+    @OnClick(R.id.test)
+    void onTestClick() {
+        TextMessage message = TextMessage.obtain("456");
+        RongIM.getInstance().insertIncomingMessage(
+                Conversation.ConversationType.PRIVATE,
+                "16",
+                "16",
+                new Message.ReceivedStatus(0),
+                message,
+                new RongIMClient.ResultCallback<Message>() {
+                    @Override
+                    public void onSuccess(Message message) {
+
+                    }
+
+                    @Override
+                    public void onError(RongIMClient.ErrorCode errorCode) {
+
+                    }
+                });
     }
 
     @Override

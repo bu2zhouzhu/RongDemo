@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.bu2zh.rongdemo.R;
 import com.example.bu2zh.rongdemo.activity.GroupDetailActivity;
@@ -21,8 +22,8 @@ import butterknife.OnClick;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationFragment;
 import io.rong.imkit.fragment.UriFragment;
-import io.rong.imkit.model.GroupUserInfo;
 import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.UserInfo;
 
 /**
  * 配置会话界面
@@ -35,6 +36,8 @@ public class ConversationActivity extends BaseActivity {
     private String[] nicks = {"nick1", "nick2", "nick3"};
     private int nickIndex;
 
+    @BindView(R.id.tv_title)
+    TextView mTitle;
     @BindView(R.id.btn_right)
     Button mRightButton;
 
@@ -45,9 +48,9 @@ public class ConversationActivity extends BaseActivity {
 
     @OnClick(R.id.text_right)
     void onTestClick() {
-        GroupUserInfo groupUserInfo = new GroupUserInfo("1", "23", "23" + nicks[nickIndex]);
-        nickIndex = (nickIndex + 1) % nicks.length;
-        RongIM.getInstance().refreshGroupUserInfoCache(groupUserInfo);
+        Uri uri = Uri.parse("http://www.rongcloud.cn/images/logo.png");
+        UserInfo userInfo = new UserInfo(mTargetId, "haha", uri);
+        RongIM.getInstance().refreshUserInfoCache(userInfo);
     }
 
     @OnClick(R.id.btn_right)
@@ -77,6 +80,7 @@ public class ConversationActivity extends BaseActivity {
 
         Uri uri = getIntent().getData();
         if (uri != null) {
+            mTitle.setText(uri.getQueryParameter("title"));
             mTargetId = uri.getQueryParameter("targetId");
             mConversationType = Conversation.ConversationType.valueOf(uri
                     .getLastPathSegment().toUpperCase(Locale.US));

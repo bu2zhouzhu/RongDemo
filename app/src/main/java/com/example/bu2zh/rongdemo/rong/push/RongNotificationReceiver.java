@@ -14,7 +14,7 @@ public class RongNotificationReceiver extends PushMessageReceiver {
     @Override
     public boolean onNotificationMessageArrived(Context context, PushNotificationMessage pushNotificationMessage) {
         Log.d("Rong-Push", "推送");
-        return false;
+        return true;
     }
 
     @Override

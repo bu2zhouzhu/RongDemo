@@ -1,9 +1,17 @@
 package com.example.bu2zh.rongdemo.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.ImageSpan;
 import android.util.Log;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.bu2zh.rongdemo.BuildConfig;
@@ -13,14 +21,14 @@ import com.example.bu2zh.rongdemo.rong.activity.ConversationListActivity;
 import com.example.bu2zh.rongdemo.sp.ConfigSp;
 import com.example.bu2zh.rongdemo.utils.MyToast;
 
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.CSCustomServiceInfo;
 import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.Message;
+import io.rong.message.TextMessage;
 
 public class MainActivity extends BaseActivity {
 
@@ -28,6 +36,10 @@ public class MainActivity extends BaseActivity {
     TextView mPackageName;
     @BindView(R.id.me)
     TextView mMe;
+    @BindView(R.id.iv)
+    ImageView mIv;
+    @BindView(R.id.et)
+    EditText mEt;
 
     @OnClick(R.id.conversation_list)
     void onConversationListClick() {
@@ -53,6 +65,7 @@ public class MainActivity extends BaseActivity {
         String id = "KEFU151150386626795";
         // 打开客服聊天界面
         RongIM.getInstance().startCustomerServiceChat(this, id, "在线客服",csInfo);
+        new Message.ReceivedStatus(1);
     }
 
     @OnClick(R.id.refresh_user_info)
@@ -80,32 +93,43 @@ public class MainActivity extends BaseActivity {
         startActivity(new Intent(this, ChatRoomActivity.class));
     }
 
-    @OnClick(R.id.test)
+    @OnClick(R.id.setting)
     void onTestClick() {
-        RongIMClient.getInstance().getConversationList(new RongIMClient.ResultCallback<List<Conversation>>() {
-            @Override
-            public void onSuccess(List<Conversation> conversations) {
-                Log.d("ccccc", "conversations size1: " + conversations.size());
-            }
+        TextMessage message = TextMessage.obtain("123");
+        RongIM.getInstance().insertIncomingMessage(
+                Conversation.ConversationType.PRIVATE,
+                "16",
+                "16",
+                new Message.ReceivedStatus(0),
+                message,
+                new RongIMClient.ResultCallback<Message>() {
+                    @Override
+                    public void onSuccess(Message message) {
 
-            @Override
-            public void onError(RongIMClient.ErrorCode errorCode) {
+                    }
 
-            }
-        });
+                    @Override
+                    public void onError(RongIMClient.ErrorCode errorCode) {
 
-        List<Conversation> conversations = RongIMClient.getInstance().getConversationList();
-        Log.d("ccccc", "conversations size2: " + conversations.size());
+                    }
+                });
     }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mIv.setImageResource(getApplicationInfo().icon);
 
         mPackageName.setText(BuildConfig.APPLICATION_ID);
         String id = new ConfigSp(this).getId();
+        SpannableStringBuilder ss = new SpannableStringBuilder("abc");
+        Drawable d = getResources().getDrawable(R.drawable.u1f3a4);
+        d.setBounds(0, 0, d.getIntrinsicWidth(), d.getIntrinsicHeight());
+        ImageSpan span = new ImageSpan(d, ImageSpan.ALIGN_BASELINE);
+        ss.setSpan(span, 2, 3, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
         mMe.setText(getString(R.string.my_id, id));
+//        mMe.setText(ss);
 
         RongIM.setConnectionStatusListener(new RongIMClient.ConnectionStatusListener() {
             @Override
@@ -121,6 +145,13 @@ public class MainActivity extends BaseActivity {
                 }
             }
         });
+        Log.d("cccc", "isDebugMode: " + isDebugMode(this));
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        Log.d("ccccc", "onNewIntent");
     }
 
     @Override
@@ -132,8 +163,13 @@ public class MainActivity extends BaseActivity {
 
     private void logout() {
         RongIM.getInstance().logout();
-        new ConfigSp(this).clear();
+//        new ConfigSp(this).clear();
         startActivity(new Intent(this, LoginActivity.class));
         finish();
+    }
+
+    private static boolean isDebugMode(Context context) {
+        ApplicationInfo info = context.getApplicationInfo();
+        return info != null && (info.flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0;
     }
 }

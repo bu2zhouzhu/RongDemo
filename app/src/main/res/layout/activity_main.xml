@@ -10,13 +10,22 @@
     <TextView
         android:id="@+id/package_name"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:maxWidth="60dp"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:ellipsize="end"
+        tools:text="123456789"/>
 
     <TextView
         android:id="@+id/me"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="我的id: "/>
+
+    <ImageView
+        android:id="@+id/iv"
+        android:layout_width="60dp"
+        android:layout_height="60dp" />
 
     <Button
         android:id="@+id/conversation_list"
@@ -67,9 +76,15 @@
         android:text="@string/logout"/>
 
     <Button
-        android:id="@+id/test"
+        android:id="@+id/setting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="test"/>
+        android:text="@string/setting"/>
+
+    <EditText
+        android:id="@+id/et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"/>
 
 </LinearLayout>

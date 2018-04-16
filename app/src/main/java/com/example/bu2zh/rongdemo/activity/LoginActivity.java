@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bu2zh.model.TokenResponse;
@@ -14,6 +15,8 @@ import com.example.bu2zh.rongdemo.utils.MyToast;
 import com.example.network.ApiService;
 import com.example.network.RongApi;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -22,11 +25,14 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Message;
 
 public class LoginActivity extends AppCompatActivity {
 
     @BindView(R.id.et_user_id)
     EditText mEtUserId;
+    @BindView(R.id.pack_name)
+    TextView mPackageNameTv;
 
     @OnClick(R.id.btn_login)
     void onLoginClick() {
@@ -40,11 +46,18 @@ public class LoginActivity extends AppCompatActivity {
         getToken(userId, userName, portrait);
     }
 
+    @OnClick(R.id.btn_re_login)
+    void onReLoginClick() {
+        String token = new ConfigSp(this).getToken();
+        connect(token);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        mPackageNameTv.setText(getApplicationInfo().packageName);
     }
 
     private void getToken(final String userId, String userName, String portrait) {
@@ -72,6 +85,19 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void connect(String token) {
+        RongIM.getInstance().getLatestMessages(null, "", 1, new RongIMClient.ResultCallback<List<Message>>() {
+            @Override
+            public void onSuccess(List<Message> messages) {
+                Message message = messages.get(0);
+                message.getSentTime();
+                message.getContent();
+            }
+
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+
+            }
+        });
         // 连接服务器
         RongIM.connect(token, new RongIMClient.ConnectCallback() {
             @Override

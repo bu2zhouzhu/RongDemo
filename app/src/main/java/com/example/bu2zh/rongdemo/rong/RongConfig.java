@@ -31,6 +31,7 @@ import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Group;
 import io.rong.imlib.model.UserInfo;
 import io.rong.push.RongPushClient;
+import io.rong.push.common.RongException;
 
 /**
  * 融云SDK配置类
@@ -45,6 +46,7 @@ public class RongConfig {
         public UserInfo getUserInfo(String s) {
             Uri uri = Uri.parse("http://rongcloud-web.qiniudn.com/docs_demo_rongcloud_logo.png");
             UserInfo userinfo = new UserInfo(s, s, uri);
+            Log.d(TAG, "getUserInfo: " + s);
             // 刷新用户信息
             RongIM.getInstance().refreshUserInfoCache(userinfo);
             return userinfo;
@@ -98,7 +100,13 @@ public class RongConfig {
 
     private void config(Context context) {
 
+        try {
+            RongPushClient.checkManifest(context);
+        } catch (RongException e) {
+            e.printStackTrace();
+        }
         RongPushClient.registerHWPush(context); // 华为推送
+        RongPushClient.registerMiPush(context, "2882303761517711400", "5141771174400");
 
         RongIM.init(context);
 
@@ -120,8 +128,8 @@ public class RongConfig {
 
         initProvider(); // 设置各种信息提供者
 
-        RongIM.getInstance().enableNewComingMessageIcon(true); //显示新消息提醒
-        RongIM.getInstance().enableUnreadMessageIcon(true); //显示未读消息数目
+        RongIM.getInstance().enableNewComingMessageIcon(true); // 下面的未读数字气泡
+        RongIM.getInstance().enableUnreadMessageIcon(true); //上面的未读标签
 
         enableReadReceipt();
 
