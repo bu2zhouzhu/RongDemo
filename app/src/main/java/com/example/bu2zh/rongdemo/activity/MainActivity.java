@@ -26,9 +26,7 @@ import butterknife.OnClick;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.CSCustomServiceInfo;
-import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
-import io.rong.message.TextMessage;
 
 public class MainActivity extends BaseActivity {
 
@@ -95,24 +93,8 @@ public class MainActivity extends BaseActivity {
 
     @OnClick(R.id.setting)
     void onTestClick() {
-        TextMessage message = TextMessage.obtain("123");
-        RongIM.getInstance().insertIncomingMessage(
-                Conversation.ConversationType.PRIVATE,
-                "16",
-                "16",
-                new Message.ReceivedStatus(0),
-                message,
-                new RongIMClient.ResultCallback<Message>() {
-                    @Override
-                    public void onSuccess(Message message) {
-
-                    }
-
-                    @Override
-                    public void onError(RongIMClient.ErrorCode errorCode) {
-
-                    }
-                });
+        String id = RongIM.getInstance().getCurrentUserId();
+        Log.d("ccc", "id: " + id);
     }
 
     @Override

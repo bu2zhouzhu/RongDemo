@@ -16,7 +16,7 @@ import io.rong.imlib.model.MessageContent;
  * 自定义消息
  */
 
-@MessageTag(value = "app:custom", flag = MessageTag.STATUS)
+@MessageTag(value = "app:custom", flag = MessageTag.ISPERSISTED)
 public class CustomizeMessage extends MessageContent {
 
     private String mContent;
