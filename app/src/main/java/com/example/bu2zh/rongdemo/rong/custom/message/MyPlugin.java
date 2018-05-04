@@ -4,41 +4,24 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
+import android.widget.BaseAdapter;
+import android.widget.GridView;
 
 import com.example.bu2zh.rongdemo.R;
 
 import io.rong.imkit.RongExtension;
-import io.rong.imkit.RongIM;
 import io.rong.imkit.plugin.IPluginModule;
-import io.rong.imlib.IRongCallback;
-import io.rong.imlib.RongIMClient;
-import io.rong.imlib.model.Conversation;
-import io.rong.imlib.model.Message;
 
 public class MyPlugin implements IPluginModule {
 
+    private boolean b;
     private String title = "MyPlugin";
-
-    private IRongCallback.ISendMessageCallback callback = new IRongCallback.ISendMessageCallback() {
-        @Override
-        public void onAttached(Message message) {
-
-        }
-
-        @Override
-        public void onSuccess(Message message) {
-
-        }
-
-        @Override
-        public void onError(Message message, RongIMClient.ErrorCode errorCode) {
-
-        }
-    };
 
     @Override
     public Drawable obtainDrawable(Context context) {
-        return context.getResources().getDrawable(R.mipmap.ic_launcher);
+        int resId = b ? R.drawable.rc_complete_hover : R.drawable.rc_complete;
+        return context.getResources().getDrawable(resId);
     }
 
     @Override
@@ -48,11 +31,10 @@ public class MyPlugin implements IPluginModule {
 
     @Override
     public void onClick(Fragment fragment, RongExtension rongExtension) {
-        Conversation.ConversationType conversationType = rongExtension.getConversationType();
-        CustomizeMessage content = new CustomizeMessage("CustomMessage");
-        String targetId = rongExtension.getTargetId();
-        Message message = Message.obtain(targetId, conversationType, content);
-        RongIM.getInstance().sendMessage(message, null, null, callback);
+        b = !b;
+        ViewPager viewPager = rongExtension.findViewById(R.id.rc_view_pager);
+        GridView gridView = (GridView) viewPager.getChildAt(0);
+        ((BaseAdapter) gridView.getAdapter()).notifyDataSetChanged();
     }
 
     @Override

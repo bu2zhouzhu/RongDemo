@@ -31,7 +31,6 @@ import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Group;
 import io.rong.imlib.model.UserInfo;
 import io.rong.push.RongPushClient;
-import io.rong.push.common.RongException;
 
 /**
  * 融云SDK配置类
@@ -100,11 +99,6 @@ public class RongConfig {
 
     private void config(Context context) {
 
-        try {
-            RongPushClient.checkManifest(context);
-        } catch (RongException e) {
-            e.printStackTrace();
-        }
         RongPushClient.registerHWPush(context); // 华为推送
         RongPushClient.registerMiPush(context, "2882303761517711400", "5141771174400");
 

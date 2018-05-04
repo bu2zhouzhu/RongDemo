@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -15,6 +16,7 @@ import com.example.bu2zh.rongdemo.R;
 import com.example.bu2zh.rongdemo.activity.GroupDetailActivity;
 import com.example.bu2zh.rongdemo.base.BaseActivity;
 
+import java.io.File;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -22,8 +24,10 @@ import butterknife.OnClick;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationFragment;
 import io.rong.imkit.fragment.UriFragment;
+import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
-import io.rong.imlib.model.UserInfo;
+import io.rong.imlib.model.Message;
+import io.rong.message.ImageMessage;
 
 /**
  * 配置会话界面
@@ -48,9 +52,32 @@ public class ConversationActivity extends BaseActivity {
 
     @OnClick(R.id.text_right)
     void onTestClick() {
-        Uri uri = Uri.parse("http://www.rongcloud.cn/images/logo.png");
-        UserInfo userInfo = new UserInfo(mTargetId, "haha", uri);
-        RongIM.getInstance().refreshUserInfoCache(userInfo);
+        String path = Environment.getExternalStorageDirectory().getPath() + "/gif/test1.jpg";
+        File file = new File(path);
+        Uri uri = Uri.fromFile(file);
+        ImageMessage imageMessage = ImageMessage.obtain(uri, uri, true);
+        Message message = Message.obtain(mTargetId, mConversationType, imageMessage);
+        RongIM.getInstance().sendImageMessage(message, null, null, new RongIMClient.SendImageMessageCallback() {
+            @Override
+            public void onAttached(Message message) {
+
+            }
+
+            @Override
+            public void onError(Message message, RongIMClient.ErrorCode errorCode) {
+
+            }
+
+            @Override
+            public void onSuccess(Message message) {
+
+            }
+
+            @Override
+            public void onProgress(Message message, int i) {
+
+            }
+        });
     }
 
     @OnClick(R.id.btn_right)
