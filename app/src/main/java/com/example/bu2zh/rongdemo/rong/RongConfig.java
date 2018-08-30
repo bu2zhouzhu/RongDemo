@@ -12,6 +12,7 @@ import com.example.bu2zh.rongdemo.rong.custom.message.MyExtensionModule;
 import com.example.bu2zh.rongdemo.rong.custom.message.MyTextMessageItemProvider;
 import com.example.bu2zh.rongdemo.rong.custom.ui.conversationlist.MyPrivateConversationProvider;
 import com.example.bu2zh.rongdemo.rong.custom.ui.conversationlist.MySystemConversationProvider;
+import com.example.bu2zh.rongdemo.rong.listener.MyConnectionStatusListener;
 import com.example.bu2zh.rongdemo.rong.listener.MyConversationBehaviorListener;
 import com.example.bu2zh.rongdemo.rong.listener.MyConversationListBehaviorListener;
 import com.example.bu2zh.rongdemo.rong.listener.MyReceiveMessageListener;
@@ -30,7 +31,6 @@ import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Group;
 import io.rong.imlib.model.UserInfo;
-import io.rong.push.RongPushClient;
 
 /**
  * 融云SDK配置类
@@ -43,7 +43,8 @@ public class RongConfig {
     private RongIM.UserInfoProvider mUserInfoProvider = new RongIM.UserInfoProvider() {
         @Override
         public UserInfo getUserInfo(String s) {
-            Uri uri = Uri.parse("http://rongcloud-web.qiniudn.com/docs_demo_rongcloud_logo.png");
+//            Uri uri = Uri.parse("http://rongcloud-web.qiniudn.com/docs_demo_rongcloud_logo.png");
+            Uri uri = Uri.parse("http://www.rongcloud.cn/docs/assets/img/index/logo.png"); // 长方形
             UserInfo userinfo = new UserInfo(s, s, uri);
             Log.d(TAG, "getUserInfo: " + s);
             // 刷新用户信息
@@ -56,10 +57,12 @@ public class RongConfig {
         @Override
         public void getGroupMembers(String groupId, RongIM.IGroupMemberCallback iGroupMemberCallback) {
             List<UserInfo> userInfoList = new ArrayList<>();
-            Uri uri = Uri.parse("http://rongcloud-web.qiniudn.com/docs_demo_rongcloud_logo.png");
+            Uri uri = Uri.parse("http://rongcloud-web.qiniudn.com/docs_demo_rongcloud_logo.png"); // 正方形
+//            Uri uri = Uri.parse("http://www.rongcloud.cn/docs/assets/img/index/logo.png"); // 长方形
             for (int i = 0; i < 100; i++) {
                 String s = String.valueOf(i);
-                UserInfo userinfo = new UserInfo(s, s, uri);
+                String name = "测试" + i;
+                UserInfo userinfo = new UserInfo(s, name, uri);
                 userInfoList.add(userinfo);
             }
             iGroupMemberCallback.onGetGroupMembersResult(userInfoList);
@@ -69,7 +72,9 @@ public class RongConfig {
     private RongIM.GroupUserInfoProvider mGroupUserInfoProvider = new RongIM.GroupUserInfoProvider() {
         @Override
         public GroupUserInfo getGroupUserInfo(String groupId, String userId) {
-            GroupUserInfo groupUserInfo = new GroupUserInfo(groupId, userId, userId);
+            Log.d("cccc", "getGroupUserInfo");
+            String nickName = "测试" + userId;
+            GroupUserInfo groupUserInfo = new GroupUserInfo(groupId, userId, nickName);
             RongIM.getInstance().refreshGroupUserInfoCache(groupUserInfo);
             return groupUserInfo;
         }
@@ -78,7 +83,10 @@ public class RongConfig {
     private RongIM.GroupInfoProvider mGroupInfoProvider = new RongIM.GroupInfoProvider() {
         @Override
         public Group getGroupInfo(String s) {
-            return new Group(s, s, null);
+            Log.d("ccc", "getGroupInfo");
+            Group group = new Group(s, s, null);
+            RongIM.getInstance().refreshGroupInfoCache(group);
+            return group;
         }
     };
 
@@ -99,8 +107,8 @@ public class RongConfig {
 
     private void config(Context context) {
 
-        RongPushClient.registerHWPush(context); // 华为推送
-        RongPushClient.registerMiPush(context, "2882303761517711400", "5141771174400");
+//        RongPushClient.registerHWPush(context); // 华为推送
+//        RongPushClient.registerMiPush(context, "2882303761517711400", "5141771174400");
 
         RongIM.init(context);
 
@@ -138,7 +146,7 @@ public class RongConfig {
         RongIM.setOnReceiveMessageListener(new MyReceiveMessageListener());
 
         // 连接状态监听器
-//        RongIM.setConnectionStatusListener(new MyConnectionStatusListener());
+        RongIM.setConnectionStatusListener(new MyConnectionStatusListener());
 
         // 会话列表操作监听器
         RongIM.setConversationListBehaviorListener(new MyConversationListBehaviorListener());
@@ -198,6 +206,9 @@ public class RongConfig {
 
     private void connect(Context context) {
         String token = new ConfigSp(context).getToken();
+        if (!(RongIM.getInstance().getCurrentConnectionStatus() == RongIMClient.ConnectionStatusListener.ConnectionStatus.CONNECTED)) {
+
+        }
         if (!TextUtils.isEmpty(token)) {
             RongIM.connect(token, new RongIMClient.ConnectCallback() {
                 @Override

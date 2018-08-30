@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- 设置聊天室一次拉取消息数目 -->
-    <integer name="rc_chatroom_first_pull_message_count">10</integer>
+    <integer name="rc_chatroom_first_pull_message_count">-1</integer>
 
     <!-- 设置在会话列表或会话页面是否显示“连接状态”的提示 -->
     <bool name="rc_is_show_warning_notification">true</bool>
@@ -24,10 +24,10 @@
     <!-- 消息撤回有效时间（单位：秒）-->
     <integer name="rc_message_recall_interval">180</integer>
     
-    <bool name="rc_enable_mentioned_message">false</bool>
+    <bool name="rc_enable_mentioned_message">true</bool>
 
     <!-- 设置已读回执，目前仅支持单聊、群聊、讨论组 -->
-    <bool name="rc_read_receipt">false</bool>
+    <bool name="rc_read_receipt">true</bool>
 
     <!-- 设置已读回执有效时间（单位：秒）-->
     <integer name="rc_read_receipt_request_interval">120</integer>

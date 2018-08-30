@@ -13,10 +13,7 @@ import butterknife.OnClick;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
 import io.rong.imkit.manager.IUnReadMessageObserver;
-import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
-import io.rong.imlib.model.Message;
-import io.rong.message.TextMessage;
 
 /**
  * 配置会话列表
@@ -26,6 +23,7 @@ public class ConversationListActivity extends BaseActivity {
 
     private static final String TAG = "会话列表界面";
     private boolean b;
+    private ConversationListFragment conversationListFragment;
 
     private IUnReadMessageObserver mObserver = new IUnReadMessageObserver() {
         @Override
@@ -36,24 +34,7 @@ public class ConversationListActivity extends BaseActivity {
 
     @OnClick(R.id.test)
     void onTestClick() {
-        TextMessage message = TextMessage.obtain("456");
-        RongIM.getInstance().insertIncomingMessage(
-                Conversation.ConversationType.PRIVATE,
-                "16",
-                "16",
-                new Message.ReceivedStatus(0),
-                message,
-                new RongIMClient.ResultCallback<Message>() {
-                    @Override
-                    public void onSuccess(Message message) {
-
-                    }
-
-                    @Override
-                    public void onError(RongIMClient.ErrorCode errorCode) {
-
-                    }
-                });
+        RongIM.getInstance().clearMessagesUnreadStatus(Conversation.ConversationType.PRIVATE, "4");
     }
 
     @Override
@@ -61,7 +42,13 @@ public class ConversationListActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conversationlist);
 
-        ConversationListFragment fragment = new MyConversationListFragment();
+        conversationListFragment = (ConversationListFragment) getSupportFragmentManager().findFragmentById(R.id.container);
+        if (conversationListFragment == null) {
+            conversationListFragment = new MyConversationListFragment();
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.add(R.id.container, conversationListFragment);
+            transaction.commit();
+        }
 
         Uri uri = Uri.parse("rong://" + getApplicationInfo().packageName).buildUpon()
                 .appendPath("conversationlist")
@@ -72,11 +59,8 @@ public class ConversationListActivity extends BaseActivity {
                 .appendQueryParameter(Conversation.ConversationType.SYSTEM.getName(), "true")//系统
                 .appendQueryParameter(Conversation.ConversationType.DISCUSSION.getName(), "false")
                 .build();
-        fragment.setUri(uri);
+        conversationListFragment.setUri(uri);
 
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.container, fragment);
-        transaction.commit();
 
         final Conversation.ConversationType[] conversationTypes = {
                 Conversation.ConversationType.PRIVATE,

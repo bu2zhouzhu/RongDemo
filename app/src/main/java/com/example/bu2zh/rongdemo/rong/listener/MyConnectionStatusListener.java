@@ -1,11 +1,11 @@
 package com.example.bu2zh.rongdemo.rong.listener;
 
-import android.os.Handler;
-import android.os.Looper;
+import android.os.CountDownTimer;
 import android.util.Log;
 
-import com.example.bu2zh.rongdemo.utils.MyToast;
+import java.lang.reflect.Field;
 
+import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 
 /**
@@ -19,14 +19,29 @@ public class MyConnectionStatusListener implements RongIMClient.ConnectionStatus
     @Override
     public void onChanged(ConnectionStatus connectionStatus) {
         Log.d(TAG, "连接状态改变: " + connectionStatus);
-        if (connectionStatus == ConnectionStatus.KICKED_OFFLINE_BY_OTHER_CLIENT) {
-            new Handler(Looper.getMainLooper()).post(new Runnable() {
+        if (connectionStatus == ConnectionStatus.CONNECTING) {
+            CountDownTimer timer = new CountDownTimer(30000, 1000) {
                 @Override
-                public void run() {
-                    MyToast.show("您的账号在另外一台设备上登录");
+                public void onTick(long millisUntilFinished) {
+
                 }
-            });
+
+                @Override
+                public void onFinish() {
+                    if (RongIM.getInstance().getCurrentConnectionStatus() == ConnectionStatus.CONNECTING) {
+                        try {
+                            Field field = RongIMClient.class.getDeclaredField("mConnectionStatus");
+                            field.setAccessible(true);
+                            field.set(RongIMClient.getInstance(), ConnectionStatus.NETWORK_UNAVAILABLE);
+                        } catch (NoSuchFieldException e) {
+                            e.printStackTrace();
+                        } catch (IllegalAccessException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            };
+            timer.start();
         }
     }
-
 }

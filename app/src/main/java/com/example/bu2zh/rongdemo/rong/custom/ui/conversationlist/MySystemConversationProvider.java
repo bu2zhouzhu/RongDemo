@@ -1,6 +1,5 @@
 package com.example.bu2zh.rongdemo.rong.custom.ui.conversationlist;
 
-import android.graphics.Color;
 import android.net.Uri;
 import android.view.View;
 
@@ -15,7 +14,6 @@ public class MySystemConversationProvider extends SystemConversationProvider {
     public void bindView(View view, int position, UIConversation data) {
         super.bindView(view, position, data);
         ViewHolder holder = (ViewHolder) view.getTag();
-        holder.title.setTextColor(Color.RED);
     }
 
     @Override

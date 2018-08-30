@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.bu2zh.rongdemo.BuildConfig;
+import com.example.bu2zh.rongdemo.HanziToPinyin;
 import com.example.bu2zh.rongdemo.R;
 import com.example.bu2zh.rongdemo.base.BaseActivity;
 import com.example.bu2zh.rongdemo.rong.activity.ConversationListActivity;
@@ -59,6 +60,7 @@ public class MainActivity extends BaseActivity {
     @OnClick(R.id.custom_service)
     void onCustomServiceClick() {
         CSCustomServiceInfo.Builder csBuilder = new CSCustomServiceInfo.Builder();
+        csBuilder.portraitUrl("https://i.imgur.com/Vx5BFGVb.jpg");
         CSCustomServiceInfo csInfo = csBuilder.nickName("融云").build();
         String id = "KEFU151150386626795";
         // 打开客服聊天界面
@@ -93,8 +95,8 @@ public class MainActivity extends BaseActivity {
 
     @OnClick(R.id.setting)
     void onTestClick() {
-        String id = RongIM.getInstance().getCurrentUserId();
-        Log.d("ccc", "id: " + id);
+        String s = HanziToPinyin.getInstance().convert("通话记录以参与者为依据显示，如果参与者相同");
+        Log.d("cccc", "name: " + s);
     }
 
     @Override

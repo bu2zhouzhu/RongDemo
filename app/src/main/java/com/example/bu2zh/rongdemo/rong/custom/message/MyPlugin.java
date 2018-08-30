@@ -4,14 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.widget.BaseAdapter;
-import android.widget.GridView;
 
 import com.example.bu2zh.rongdemo.R;
 
 import io.rong.imkit.RongExtension;
+import io.rong.imkit.RongIM;
 import io.rong.imkit.plugin.IPluginModule;
+import io.rong.imlib.IRongCallback;
+import io.rong.imlib.model.Message;
 
 public class MyPlugin implements IPluginModule {
 
@@ -32,9 +32,12 @@ public class MyPlugin implements IPluginModule {
     @Override
     public void onClick(Fragment fragment, RongExtension rongExtension) {
         b = !b;
-        ViewPager viewPager = rongExtension.findViewById(R.id.rc_view_pager);
-        GridView gridView = (GridView) viewPager.getChildAt(0);
-        ((BaseAdapter) gridView.getAdapter()).notifyDataSetChanged();
+//        ViewPager viewPager = rongExtension.findViewById(R.id.rc_view_pager);
+//        GridView gridView = (GridView) viewPager.getChildAt(0);
+//        ((BaseAdapter) gridView.getAdapter()).notifyDataSetChanged();
+        CustomizeMessage message = CustomizeMessage.obtain(123, "haha");
+        Message message1 = Message.obtain(rongExtension.getTargetId(), rongExtension.getConversationType(), message);
+        RongIM.getInstance().sendMessage(message1, null, null, (IRongCallback.ISendMessageCallback) null);
     }
 
     @Override

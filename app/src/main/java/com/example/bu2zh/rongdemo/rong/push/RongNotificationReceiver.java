@@ -13,13 +13,13 @@ import io.rong.push.notification.PushNotificationMessage;
 public class RongNotificationReceiver extends PushMessageReceiver {
     @Override
     public boolean onNotificationMessageArrived(Context context, PushNotificationMessage pushNotificationMessage) {
-        Log.d("Rong-Push", "推送");
+        Log.d("cccc", "onNotificationMessageArrived: " + pushNotificationMessage.getSenderId());
         return true;
     }
 
     @Override
     public boolean onNotificationMessageClicked(Context context, PushNotificationMessage pushNotificationMessage) {
-        Log.d("Rong-Push", "点击通知栏");
+        Log.d("cccc", "点击通知栏");
         return false;
     }
 }

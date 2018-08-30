@@ -5,9 +5,13 @@ import android.util.Log;
 import android.view.View;
 
 import io.rong.imkit.RongIM;
+import io.rong.imlib.IRongCallback;
+import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.UserInfo;
+import io.rong.message.ImageMessage;
+import io.rong.message.TextMessage;
 
 /**
  * 会话界面操作的监听器
@@ -82,7 +86,24 @@ public class MyConversationBehaviorListener implements RongIM.ConversationBehavi
      */
     @Override
     public boolean onMessageLongClick(Context context, View view, Message message) {
-        Log.d(TAG, "长按消息");
+        if (message.getContent() instanceof ImageMessage) {
+            Message msg = Message.obtain(message.getSenderUserId(), message.getConversationType(), message.getContent());
+            RongIM.getInstance().sendMessage(msg, null, null, (IRongCallback.ISendMessageCallback) null);
+            return true;
+        } else if (message.getContent() instanceof TextMessage) {
+            Log.d("cccc", "targetId: " + message.getTargetId());
+            RongIM.getInstance().clearMessagesUnreadStatus(message.getConversationType(), message.getTargetId(), new RongIMClient.ResultCallback<Boolean>() {
+                @Override
+                public void onSuccess(Boolean aBoolean) {
+
+                }
+
+                @Override
+                public void onError(RongIMClient.ErrorCode errorCode) {
+
+                }
+            });
+        }
         return false;
     }
 }

@@ -11,9 +11,9 @@ import io.rong.imlib.model.Conversation;
  * Created by luoyanlong on 2018/01/26.
  */
 
-public class ConversationListAdapterEx extends ConversationListAdapter {
+public class MyConversationListAdapter extends ConversationListAdapter {
 
-    public ConversationListAdapterEx(Context context) {
+    public MyConversationListAdapter(Context context) {
         super(context);
     }
 
@@ -22,7 +22,8 @@ public class ConversationListAdapterEx extends ConversationListAdapter {
         super.bindView(v, position, data);
         if (data != null) {
             ViewHolder holder = (ViewHolder) v.getTag();
-            if (data.getConversationGatherState() && data.getConversationType() == Conversation.ConversationType.SYSTEM)
+            if (data.getConversationGatherState()
+                    && data.getConversationType() == Conversation.ConversationType.SYSTEM)
             holder.leftImageView.setAvatar();
         }
     }

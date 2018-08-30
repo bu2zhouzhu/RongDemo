@@ -40,6 +40,9 @@ public class ConversationActivity extends BaseActivity {
     private String[] nicks = {"nick1", "nick2", "nick3"};
     private int nickIndex;
 
+    private boolean aBoolean;
+    private Message mMessage;
+
     @BindView(R.id.tv_title)
     TextView mTitle;
     @BindView(R.id.btn_right)
@@ -52,30 +55,30 @@ public class ConversationActivity extends BaseActivity {
 
     @OnClick(R.id.text_right)
     void onTestClick() {
-        String path = Environment.getExternalStorageDirectory().getPath() + "/gif/test1.jpg";
-        File file = new File(path);
+        String filePath = Environment.getExternalStorageDirectory() + "/gif/cpp.gif";
+        File file = new File(filePath);
         Uri uri = Uri.fromFile(file);
-        ImageMessage imageMessage = ImageMessage.obtain(uri, uri, true);
+        ImageMessage imageMessage = ImageMessage.obtain(uri, uri);
         Message message = Message.obtain(mTargetId, mConversationType, imageMessage);
         RongIM.getInstance().sendImageMessage(message, null, null, new RongIMClient.SendImageMessageCallback() {
             @Override
             public void onAttached(Message message) {
-
+                Log.d("cccc", "onAttach");
             }
 
             @Override
             public void onError(Message message, RongIMClient.ErrorCode errorCode) {
-
+                Log.d("cccc", "onError");
             }
 
             @Override
             public void onSuccess(Message message) {
-
+                Log.d("cccc", "onSuccess");
             }
 
             @Override
             public void onProgress(Message message, int i) {
-
+                Log.d("cccc", "onProgress");
             }
         });
     }
